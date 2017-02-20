@@ -1,0 +1,34 @@
+@import '../../index.less';
+
+.menu{
+  margin-top: 48px;
+  width: 100%;
+  justify-content:center;
+  .item{
+    flex: 1;
+    height: 36px;
+    line-height: 36px;
+    font-size: 14px;
+    font-weight: 100;
+    letter-spacing: 2px;
+    color: #979797;
+    padding-left: 24px;
+    cursor: pointer;
+    transition: all .3s;
+    &:hover{
+      text-shadow: 0 0 3px black;
+      color: #CCC;
+    }
+  }
+  .selected{
+    background-color: @mainFontColor;
+    color: white;
+    font-weight: 300;
+    box-shadow: 3px 0 3px 0px #222 inset, 0 1px 0px 0px rgb(89, 89, 89);
+    text-shadow: 0 0 6px white, 0 4px 2px black;
+    &:hover{
+      color: white;
+      text-shadow: 0 0 6px white, 0 4px 2px black;
+    }
+  }
+}
