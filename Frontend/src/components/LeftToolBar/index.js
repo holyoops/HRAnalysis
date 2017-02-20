@@ -71,7 +71,9 @@ class LeftToolBar extends Component {
           </div>
           <SubTitle />
         </div>
+        <div className="menu-container">
         <Menu/>
+        </div>
       </div>
     );
   }
