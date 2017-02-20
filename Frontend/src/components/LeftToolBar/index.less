@@ -24,9 +24,9 @@
       z-index: 9;
     }
     .sub-title{
+      transition: .5s ease-out;
+      padding-top: 8px;
       display: flex;
-      margin-top: -30px;
-      transition: all .3s ease-in-out;
       width: 100%;
       .for{
         font-weight: 100;
@@ -54,9 +54,6 @@
         font-weight: 100;
       }
     }
-    .move{
-      margin-top: 8px;
-    }
   }
   .menu-container{
     flex-direction:column;
@@ -67,5 +64,14 @@
     top: 0px;
     width: 200px;
     height: 100%;
+  }
+}
+
+.example-appear {
+  margin-top: -30px;
+  opacity: 0;
+  .example-appear-active {
+    margin-top: 0px;
+    opacity: 1;
   }
 }
