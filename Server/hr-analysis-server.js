@@ -26,8 +26,6 @@ db.front.find().toArray(function(e, r) {
   console.log(r);
 });
 
-
-
 const originList = [
   'http://localhost:10262',
   'http://10.132.132.192:10262',
