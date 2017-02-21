@@ -101,7 +101,7 @@ const config = {
   devServer: {
     contentBase: './dist',
     historyApiFallback: true,
-    port: 3302,
+    port: 10262,
     hot: true,
     compress: isProd,
     stats: { colors: true },

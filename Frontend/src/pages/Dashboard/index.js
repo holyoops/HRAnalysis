@@ -3,20 +3,64 @@ import UserTrend from 'components/UserTrend';
 import {ajax} from '../../ajax.js';
 
 ajax({
-  url: 'http://localhost:3301/api/todo_list',
+  url: 'http://10.129.34.226:10261/api/test',
   method: 'POST',
   async: true,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   },
-  data: JSON.stringify({test:'whaaaaaat aaaa fuuuuuuck!'}),
+  data: JSON.stringify({test:'send data'}),
   onprogress: function (evt) {
     // console.log(evt.position/evt.total);
   }
 })
 .then(function (xhr) { console.log(xhr.response); },
-function (e) { console.log(JSON.stringify(e)) })
+function (e) { console.log(JSON.stringify(e)) });
+
+const data = {
+  initID: 'uuid', // 本次初始化埋点SDK的ID
+  eventID: 'uuid',
+  timestamp: 'yyyymmddhhmmss',
+  name:'name',
+  appID: 'appID',
+  openID: 'openID', // 开放平台openID
+  traceID: 'traceID',
+  message: {
+    ssid: 'wifi-ssid', //
+    netType: 'WIFI', // 2G/3G/4G/WIFI
+    gps: {
+      lat: 121.12,
+      lon: 32.58,
+      alt: 300
+    },
+    carrier: 'China Mobile',
+    motion: {
+      s: 0, // 速度，m/h
+      a: 0, // 加速度，m/s^2
+      p: 0 // 气压单位，Pa
+    },
+    deviceType: 'iOS', // iOS/Android/JS(iOS)/JS(Android)/JS(PC)
+    OSVersion: '10',
+    userAgent: ''
+  }
+};
+
+ajax({
+  url: 'http://10.129.34.226:10261/api/eventTrack',
+  method: 'POST',
+  async: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(data),
+  onprogress: function (evt) {
+    // console.log(evt.position/evt.total);
+  }
+})
+.then(function (xhr) { console.log(xhr.response); },
+function (e) { console.log(JSON.stringify(e)) });
 
 // fetch("http://localhost:3301/api/todo_list", {
 //   method: "POST",
