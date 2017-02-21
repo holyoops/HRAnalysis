@@ -16,11 +16,12 @@ const bodyParser = BodyParser({
 });
 
 const SendData2Kafka = require('./kafka.js');
-
 const k = new SendData2Kafka(JSON.stringify({message:{newTest:'0221test01',_id:'id'}}));
 
 const db = mongo.db('mongodb://10.128.166.43/logi_anal', {native_parser:true});
 db.bind('front');
+
+//db.front.remove({})
 db.front.find().toArray(function(e, r) {
   console.log(r);
 });
