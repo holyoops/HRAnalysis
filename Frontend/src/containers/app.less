@@ -4,16 +4,28 @@
   width: 100%;
   height: 100%;
   display: flex;
-}
+  flex-direction: column;
+  .viewport-top{
+    width: 100%;
+    flex-basis: 40px;
+    background-color: #1D2137;
+  }
+  .viewport-bottom{
+    width: 100%;
+    flex: 1;
+    display: flex;
+    .viewport-left {
+      width: 160px;
+      display: flex;
+      flex-direction: column;
+    }
 
-.left {
-  width: 200px;
-  height: 100%;
-  background-color: @left-bg;
-}
+    .viewport-right {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background-image: linear-gradient(150deg,#272f47,#1F263E);
+    }
+  }
 
-.right {
-  flex: 1;
-  background-color: @base;
-  height: 100%;
 }

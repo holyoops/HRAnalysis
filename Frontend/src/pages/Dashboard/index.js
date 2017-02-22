@@ -1,6 +1,8 @@
 import React from 'react';
-import UserTrend from 'components/UserTrend';
+import SDKFuncCalledChart from 'components/SDKFuncCalledChart';
+import DashboardBottom from 'components/DashboardBottom';
 import {ajax} from '../../ajax.js';
+import './index.less';
 
 ajax({
   url: 'http://10.129.34.226:10261/api/test',
@@ -96,6 +98,8 @@ function (e) { console.log(JSON.stringify(e)) });
 // }
 
 export default () => (
-  //<UserTrend />
-  <div />
+  <div className="pages-dashboard">
+    <SDKFuncCalledChart />
+    <DashboardBottom />
+  </div>
 );

@@ -31,6 +31,7 @@ class LeftToolBar extends Component {
   render() {
     return (
       <div className='left-tool-bar'>
+      {/*
         <div className='logo'>
           <div className='HRAnalysis'>
             HRAnalysis
@@ -50,8 +51,8 @@ class LeftToolBar extends Component {
               </div>
             </div>
           </ReactCSSTransitionGroup>
-
         </div>
+      */}
         <div className="menu-container">
           <Menu/>
         </div>
