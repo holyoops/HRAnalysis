@@ -5,7 +5,7 @@ const divStyle = {
   height: '67%'
 };
 
-const items = 981;
+const allCount = 981;
 
 const items = [{
     count: '2k',
