@@ -85,14 +85,13 @@ class SDKFuncCalledChart extends Component {
         <div className='chart-container'>
           <ResponsiveContainer>
           	<LineChart data={data}
-                  margin={{top: 20, right: 20, left: 50, bottom: 40}} >
+                  margin={{top: 20, right: 8, left: 80, bottom: 40}} >
              <XAxis dataKey="date" stroke="rgba(0,0,0,0)" tickSize={30} tick={{stroke: "#464C66"}} interval = {2} orientation="top"/>
-             <YAxis stroke="rgba(0,0,0,0)" tickSize={50} tick={{stroke: "#464C66"}}/>
-             <CartesianGrid stroke="#272D41"/>
+             <YAxis  stroke="#464C66" tickSize={60} tick={{stroke: "#464C66"}} tickLine={{stroke: "rgba(0,0,0,0)"}}/>
+             <CartesianGrid stroke="#272D41" strokeDasharray="3 3"/>
              <Tooltip content={<CustomTooltip/>}/>
-             <Line type="monotone" name="SDK初始化次数" dataKey="SDK" stroke="#343954" strokeWidth={2} dot={false}/>
-             <Line type="monotone" name="功能调用次数" dataKey="func" stroke="#425793" strokeWidth={3} dot={false} height={50}/>
-
+             <Line type="monotone" name="SDK初始化次数" dataKey="SDK" stroke="#343954" strokeWidth={1} dot={false}/>
+             <Line type="monotone" name="功能调用次数" dataKey="func" stroke="#6496FB" strokeWidth={2} dot={false} height={50}/>
             </LineChart>
           </ResponsiveContainer>
         </div>

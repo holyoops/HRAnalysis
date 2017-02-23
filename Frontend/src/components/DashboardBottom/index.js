@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Last24SDKInit from 'components/Last24SDKInit';
 import './index.less';
 
 class DashboardBottom extends Component {
@@ -8,6 +9,7 @@ class DashboardBottom extends Component {
         <div className="left">
         </div>
         <div className="center">
+          <Last24SDKInit />
         </div>
         <div className="right">
         </div>
