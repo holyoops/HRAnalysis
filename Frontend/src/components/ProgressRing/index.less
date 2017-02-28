@@ -1,0 +1,48 @@
+@size: 100px; // 圆环宽高
+@borderWidth: 2px; // 轨道宽度
+@precent: 10; // 进度百分比
+@duration: 2s; // 动画时长
+
+.ProgressRing-positioning(@pos) {
+    position: @pos;
+    top: 0;
+    left: 0;
+    height: @size;
+    width: @size;
+}
+
+.ProgressRing {
+    left: 24px;
+    margin: 0 auto;
+    margin-top: 24px;
+    .ProgressRing-positioning(relative);
+    div {
+        .ProgressRing-positioning(absolute);
+        border: @borderWidth solid transparent;
+        border-radius: 50%;
+        box-sizing: border-box;
+    }
+
+    .ProgressRing-track{
+      border-color: red;
+    }
+
+    .ProgressRing-right {
+        transform: rotate(180deg); /* 旋转到右边 */
+        border-color: #343954;
+        transform: rotate(3.6deg * @precent);
+        clip: rect(0 (@size / 2) @size 0);
+    }
+
+    .ProgressRing-left {
+        border-color: #343954;
+        clip: rect(0 (@size / 2) @size 0);
+        transition: transform @duration linear;
+    }
+
+    .ProgressRing-cover{
+      border-color: red;
+      clip: rect(0 (@size / 2) @size 0);
+    }
+
+}

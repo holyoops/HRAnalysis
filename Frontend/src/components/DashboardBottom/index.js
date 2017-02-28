@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Last24SDKInit from 'components/Last24SDKInit';
+import ProgressRing from 'components/ProgressRing';
 import './index.less';
 
 class DashboardBottom extends Component {
@@ -12,6 +13,7 @@ class DashboardBottom extends Component {
           <Last24SDKInit />
         </div>
         <div className="right">
+          <ProgressRing />
         </div>
       </div>
     );
