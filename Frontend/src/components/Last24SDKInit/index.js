@@ -9,37 +9,70 @@ const allCount = 981;
 
 const items = [{
     count: '2k',
-    hour: '0~2'
+    hour: '0~2',
+    style: {
+      height: '2%'
+    }
   },{
     count: '2k',
-    hour: '2~4'
+    hour: '2~4',
+    style: {
+      height: '1%'
+    }
   },{
     count: '2k',
-    hour: '4~6'
+    hour: '4~6',
+    style: {
+      height: '0%'
+    }
   },{
     count: '2k',
-    hour: '6~8'
+    hour: '6~8',
+    style: {
+      height: '25%'
+    }
   },{
     count: '2k',
-    hour: '8~10'
+    hour: '8~10',
+    style: {
+      height: '22%'
+    }
   },{
     count: '2k',
-    hour: '10~12'
+    hour: '10~12',
+    style: {
+      height: '20%'
+    }
   },{
     count: '2k',
-    hour: '12~14'
+    hour: '12~14',
+    style: {
+      height: '5%'
+    }
   },{
     count: '2k',
-    hour: '14~16'
+    hour: '14~16',
+    style: {
+      height: '6%'
+    }
   },{
     count: '2k',
-    hour: '16~18'
+    hour: '16~18',
+    style: {
+      height: '9%'
+    }
   },{
     count: '2k',
-    hour: '18~20'
+    hour: '18~20',
+    style: {
+      height: '9%'
+    }
   },{
     count: '2k',
-    hour: '22~24'
+    hour: '22~24',
+    style: {
+      height: '1%'
+    }
   }];
 
 class Last24SDKInit extends Component {
@@ -81,7 +114,7 @@ class Last24SDKInit extends Component {
                   {item.count}
                 </div>
                 <div className='Last24SDKInit-hour-bg'>
-                  <div className='Last24SDKInit-hour-bar' style={divStyle}>
+                  <div className='Last24SDKInit-hour-bar' style={item.style}>
                   </div>
                 </div>
                 <div className='Last24SDKInit-hour-text'>

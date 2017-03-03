@@ -1,38 +1,7 @@
-// --------- HRAnalysis SDK 开发者调用
-
-HRAnalysis.init({
-  appID: appID,
-  openID: openID,
-  initID:  uuid// 本次初始化埋点SDK的ID
-}) => {
-  return initID
-};
-
-HRAnalysis.eventTrack({
-    name:'name',
-    traceID: 'traceID', // 开发者自定义传入，同一个traceID可关联多个事件
-    message:{
-
-    }
-});
-
-
 // --------- HRAnalysis SDK 定义
 
 {
   initID: uuid, // 本次初始化埋点SDK的ID
-  name:'name',
-  appID: appID,
-  openID: openID, // 开放平台openID
-  traceID: traceID,
-  message: message
-}
-
-// --------- HRAnalysis 数据库
-{
-  initID: uuid, // 本次初始化埋点SDK的ID
-  eventID: uuid,
-  timestamp: yyyymmddhhmmss,
   name:'name',
   appID: appID,
   openID: openID, // 开放平台openID
@@ -90,34 +59,5 @@ HRAnalysis.eventTrack({
 HRAnalysis.eventTrack({
   name:'CREATE_ACCOUNT_SUCCESS',
   message:{
-  }
-});
-
-
-
-// 前端
-HRAnalysis.eventTrack({
-  name:'PAY_USER_CONSUMING_DETAIL', // 支付：PAY_USER_CONSUMING_DETAIL，申购：PURCHASE_USER_CONSUMING_DETAIL，融资：DEBIT_USER_CONSUMING_DETAIL，开户：ACCOUNT_USER_CONSUMING_DETAIL，充值：DEPOSIT_USER_CONSUMING_DETAIL
-  message:{
-    time: 30, //秒数,
-    pageURL: 'pageURL'
-  }
-});
-
-// 前端
-HRAnalysis.eventTrack({
-  name:'API_'+接口名,
-  message:{
-    status: 0 // start: 0, success: 1, faild: 2
-    time: 30 //秒数
-  },
-  traceID: traceID
-});
-
-// 前端
-HRAnalysis.eventTrack({
-  name:'PAY_ABORT' // 支付：PAY_ABORT，申购：PURCHASE_ABORT，融资：DEBIT_ABORT，开户：ACCOUNT_ABORT，充值：DEPOSIT_ABORT
-  message:{
-    pageURL: 'pageURL'
   }
 });
