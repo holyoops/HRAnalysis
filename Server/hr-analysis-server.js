@@ -5,6 +5,8 @@ const BodyParser = require('koa-bodyparser');
 const Cors = require('kcors');
 const mongo = require('mongoskin');
 
+const http = require('http');
+
 const app = new Koa();
 const serve = Serve('../Frontend/dist');
 const router = new Router();
@@ -49,7 +51,9 @@ router
   return ctx.body = {test:'success'};
 })
 .post('/eventTrack', function (ctx, next) {
-  console.log('\n----------api/eventTrack start----------\nDate:',new Date().toLocaleString(),'\ncontent:',ctx.request.body,'\norigin:',ctx.header.origin,'\n----------api/eventTrack end----------');
+  let body = ctx.request.body;
+  let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+  console.log('\n----------api/eventTrack start----------\nDate:',new Date().toLocaleString(),'\nip:',clientIP,'\ncontent:',body,'\norigin:',ctx.header.origin,'\n----------api/eventTrack end----------');
   return ctx.status = 204;
 });
 
@@ -61,4 +65,4 @@ app
 .use(cors)
 .use(router.routes())
 .use(serve)
-.listen(10261);
+.listen(10261,'0.0.0.0');
