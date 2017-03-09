@@ -7,7 +7,8 @@ const vendors = [
   'react-dom',
   'react-router',
   'react-addons-css-transition-group',
-  'recharts'
+  'recharts',
+  'echarts-for-react'
 ];
 
 module.exports = {
