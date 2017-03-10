@@ -54,7 +54,7 @@ const cors = Cors({
     log('api/eventTrack', body, ctx.header.origin, clientIP);
     return ctx.status = 204;
   })
-  .get('/getAll', function (ctx, next) {
+  .get('/getAll', async function(ctx, next){
 
     let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
 
@@ -65,11 +65,9 @@ const cors = Cors({
     // }).then(function (data) {
     //   return {count: data.length};
     // });
-    db.front.find().toArray(function(e, r) {
-      console.log({count: r.length});
+    await db.front.count({},function(e,r) {
+         return {count: r}
     });
-
-    return;
 
   })
   .get('/cleanData', function (ctx, next) {
@@ -84,7 +82,7 @@ const cors = Cors({
           "appID": "appID",
           "openID": "openID",
           "name": "INIT_DEVICE_INFO",
-          "time": "2017-01-0" + "10" + " 00:00:00",
+          "time": "2017-01-0" + "11" + " 00:00:00",
           "IP": "10.10.10.10",
           "ip_location": {
             "area": "华东",
