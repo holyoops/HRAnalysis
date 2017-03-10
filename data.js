@@ -24,7 +24,6 @@ HRAnalysis.eventTrack({
   name:'name',
   appID: appID,
   openID: openID, // 开放平台openID
-  traceID: traceID,
   message: message
 }
 
@@ -109,7 +108,6 @@ HRAnalysis.eventTrack({
   name:'API_'+接口名,
   message:{
     status: 0 // start: 0, success: 1, faild: 2
-    time: 30 //秒数
   },
   traceID: traceID
 });

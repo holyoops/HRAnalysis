@@ -30,6 +30,7 @@ HRAnalysis.eventTrack({
       }
       deviceType: 'iOS', // iOS/Android/JS(iOS)/JS(Android)/JS(PC)
       OSVersion: '10',
+      SDKVersion
       userAgent: ''
     }
 });

@@ -4,35 +4,33 @@ const Router = require('koa-router');
 const BodyParser = require('koa-bodyparser');
 const Cors = require('kcors');
 const mongo = require('mongoskin');
-
+const SendData2Kafka = require('./kafka.js');
 const http = require('http');
-
+const log = require('./log.js');
 const app = new Koa();
 const serve = Serve('../Frontend/dist');
 const router = new Router();
 const bodyParser = BodyParser({
   onerror: function (err, ctx) {
-    console.log('\n----------BodyParser ERROR start----------\nDate:',new Date().toLocaleString(),err,'\n----------BodyParser ERROR end----------');
+    let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+    log('BodyParser ERROR', err, ctx.header.origin, clientIP);
     ctx.throw('body parse error', 422);
   }
 });
 
-const SendData2Kafka = require('./kafka.js');
-const k = new SendData2Kafka(JSON.stringify({message:{newTest:'0221test01',_id:'id'}}));
-
 const db = mongo.db('mongodb://10.128.166.43/logi_anal', {native_parser:true});
 db.bind('front');
 
-//db.front.remove({})
-db.front.find().toArray(function(e, r) {
-  console.log(r);
-});
-
 const originList = [
   'http://localhost:10262',
-  'http://10.132.132.192:10262',
-  'http://10.129.34.226:10262'
+  'https://hop.hulubank.com.cn:1443',
+  'https://hop.hulubank.com.cn:2443',
+  'https://hop.hulubank.com.cn:443',
+  'https://open.hulubank.com.cn',
+  'https://hop.shrb.it'
 ];
+
+let count = 0;
 
 const cors = Cors({
   origin: (req) => {
@@ -44,25 +42,92 @@ const cors = Cors({
   methods: 'OPTIONS, POST, GET, PUT, DELETE, PATCH',
   headers: 'Content-Type, Accept, Origin'});
 
-router
-.prefix('/api')
-.post('/test', function (ctx, next) {
-  console.log('\n----------api/test start----------\nDate:',new Date().toLocaleString(),'\ncontent:',ctx.request.body,'\norigin:',ctx.header.origin,'\n----------api/test end----------');
-  return ctx.body = {test:'success'};
-})
-.post('/eventTrack', function (ctx, next) {
-  let body = ctx.request.body;
-  let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
-  console.log('\n----------api/eventTrack start----------\nDate:',new Date().toLocaleString(),'\nip:',clientIP,'\ncontent:',body,'\norigin:',ctx.header.origin,'\n----------api/eventTrack end----------');
-  return ctx.status = 204;
-});
+  router
+  .prefix('/api')
+  .post('/test', function (ctx, next) {
+    return ctx.body = {test:'success'};
+  })
+  .post('/eventTrack', function (ctx, next) {
+    let body = ctx.request.body;
+    let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+    const k = new SendData2Kafka(JSON.stringify(body));
+    log('api/eventTrack', body, ctx.header.origin, clientIP);
+    return ctx.status = 204;
+  })
+  .get('/getAll', function (ctx, next) {
 
-//app.use(router.middleware());
-//app
+    let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
 
-app
-.use(bodyParser)
-.use(cors)
-.use(router.routes())
-.use(serve)
-.listen(10261,'0.0.0.0');
+    // this.body = yield new Promise(function (resolve, reject) {
+    //   db.front.find().toArray(function(e, r) {
+    //     resolve(r);
+    //   });
+    // }).then(function (data) {
+    //   return {count: data.length};
+    // });
+    db.front.find().toArray(function(e, r) {
+      console.log({count: r.length});
+    });
+
+    return;
+
+  })
+  .get('/cleanData', function (ctx, next) {
+    db.front.remove({})
+    return ctx.body = {msg:'clean db success'};
+  })
+  .get('/fakeData', async function(ctx, next) {
+
+      for (var i = 0; i < 10000; i++) {
+        let data = {
+          "initID": i + count,
+          "appID": "appID",
+          "openID": "openID",
+          "name": "INIT_DEVICE_INFO",
+          "time": "2017-01-0" + "10" + " 00:00:00",
+          "IP": "10.10.10.10",
+          "ip_location": {
+            "area": "华东",
+            "country": "中国",
+            "city": "上海",
+            "procine": "上海市",
+            "latitude": "31.249",
+            "procinceId": "310000",
+            "countryId": "CN",
+            "longitude": "121.487"
+          },
+          "message":{
+            "ssid": "wifi-ssid",
+            "netType": "WIFI",
+            "gps": {
+              "lat": 121.12,
+              "lon": 32.58,
+              "alt": 300
+            },
+            "carrier": "China Mobile",
+            "motion": {
+              "s": 0,
+              "a": 0,
+              "p": 0
+            },
+            "deviceType": "iOS",
+            "OSVersion": "10",
+            "SDKVersion": "1.0"
+          }
+        };
+        await db.front.insert(data);
+      }
+
+    count = count + 10000;
+    return ctx.body = {msg:'fake data success'};
+  });
+
+  //app.use(router.middleware());
+  //app
+
+  app
+  .use(bodyParser)
+  .use(cors)
+  .use(router.routes())
+  .use(serve)
+  .listen(10261,'0.0.0.0');
