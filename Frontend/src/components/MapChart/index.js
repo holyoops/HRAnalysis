@@ -1,359 +1,222 @@
 import React, {Component} from 'react';
 import './index.less';
-// Note that HighMaps has to be in the codebase already
-var ReactHighmaps = require('react-highcharts/ReactHighmaps.src');
-var ReactDOM = require('react-dom');
-var maps = require('./cn.geo.js');
+import ReactEcharts from 'echarts-for-react';
+import './cn.geo.js';
 
-var a = 4;
-console.log(a&2);
+var ReactDOM = require('react-dom');
+var cityList = require('./cityList.js');
 
 var data = [
-  {
-    "hc-key": "tw-ph",
-    "value": 0
-  },
-  {
-    "hc-key": "cn-sh",
-    "value": 1
-  },
-  {
-    "hc-key": "tw-km",
-    "value": 2
-  },
-  {
-    "hc-key": "cn-zj",
-    "value": 3
-  },
-  {
-    "hc-key": "tw-lk",
-    "value": 4
-  },
-  {
-    "hc-key": "cn-3664",
-    "value": 5
-  },
-  {
-    "hc-key": "cn-3681",
-    "value": 6
-  },
-  {
-    "hc-key": "cn-fj",
-    "value": 7
-  },
-  {
-    "hc-key": "cn-gd",
-    "value": 8
-  },
-  {
-    "hc-key": "tw-tw",
-    "value": 9
-  },
-  {
-    "hc-key": "tw-cs",
-    "value": 10
-  },
-  {
-    "hc-key": "cn-6657",
-    "value": 11
-  },
-  {
-    "hc-key": "cn-6663",
-    "value": 12
-  },
-  {
-    "hc-key": "cn-6665",
-    "value": 13
-  },
-  {
-    "hc-key": "cn-6666",
-    "value": 14
-  },
-  {
-    "hc-key": "cn-6667",
-    "value": 15
-  },
-  {
-    "hc-key": "cn-6669",
-    "value": 16
-  },
-  {
-    "hc-key": "cn-6670",
-    "value": 17
-  },
-  {
-    "hc-key": "cn-6671",
-    "value": 18
-  },
-  {
-    "hc-key": "tw-kh",
-    "value": 19
-  },
-  {
-    "hc-key": "tw-hs",
-    "value": 20
-  },
-  {
-    "hc-key": "cn-yn",
-    "value": 21
-  },
-  {
-    "hc-key": "cn-xz",
-    "value": 22
-  },
-  {
-    "hc-key": "tw-hh",
-    "value": 23
-  },
-  {
-    "hc-key": "tw-cl",
-    "value": 24
-  },
-  {
-    "hc-key": "tw-ml",
-    "value": 25
-  },
-  {
-    "hc-key": "cn-nx",
-    "value": 26
-  },
-  {
-    "hc-key": "cn-sa",
-    "value": 27
-  },
-  {
-    "hc-key": "tw-ty",
-    "value": 28
-  },
-  {
-    "hc-key": "cn-3682",
-    "value": 29
-  },
-  {
-    "hc-key": "tw-cg",
-    "value": 30
-  },
-  {
-    "hc-key": "cn-6655",
-    "value": 31
-  },
-  {
-    "hc-key": "cn-ah",
-    "value": 32
-  },
-  {
-    "hc-key": "cn-hu",
-    "value": 33
-  },
-  {
-    "hc-key": "tw-hl",
-    "value": 34
-  },
-  {
-    "hc-key": "tw-th",
-    "value": 35
-  },
-  {
-    "hc-key": "cn-6656",
-    "value": 36
-  },
-  {
-    "hc-key": "tw-nt",
-    "value": 37
-  },
-  {
-    "hc-key": "cn-6658",
-    "value": 38
-  },
-  {
-    "hc-key": "cn-6659",
-    "value": 39
-  },
-  {
-    "hc-key": "cn-cq",
-    "value": 40
-  },
-  {
-    "hc-key": "cn-hn",
-    "value": 41
-  },
-  {
-    "hc-key": "tw-yl",
-    "value": 42
-  },
-  {
-    "hc-key": "cn-6660",
-    "value": 43
-  },
-  {
-    "hc-key": "cn-6661",
-    "value": 44
-  },
-  {
-    "hc-key": "cn-6662",
-    "value": 45
-  },
-  {
-    "hc-key": "cn-6664",
-    "value": 46
-  },
-  {
-    "hc-key": "cn-6668",
-    "value": 47
-  },
-  {
-    "hc-key": "tw-pt",
-    "value": 48
-  },
-  {
-    "hc-key": "tw-tt",
-    "value": 49
-  },
-  {
-    "hc-key": "tw-tn",
-    "value": 50
-  },
-  {
-    "hc-key": "cn-bj",
-    "value": 51
-  },
-  {
-    "hc-key": "cn-hb",
-    "value": 52
-  },
-  {
-    "hc-key": "tw-il",
-    "value": 53
-  },
-  {
-    "hc-key": "tw-tp",
-    "value": 54
-  },
-  {
-    "hc-key": "cn-sd",
-    "value": 55
-  },
-  {
-    "hc-key": "tw-ch",
-    "value": 56
-  },
-  {
-    "hc-key": "cn-tj",
-    "value": 57
-  },
-  {
-    "hc-key": "cn-ha",
-    "value": 58
-  },
-  {
-    "hc-key": "cn-jl",
-    "value": 59
-  },
-  {
-    "hc-key": "cn-qh",
-    "value": 60
-  },
-  {
-    "hc-key": "cn-xj",
-    "value": 61
-  },
-  {
-    "hc-key": "cn-nm",
-    "value": 62
-  },
-  {
-    "hc-key": "cn-hl",
-    "value": 63
-  },
-  {
-    "hc-key": "cn-sc",
-    "value": 64
-  },
-  {
-    "hc-key": "cn-gz",
-    "value": 65
-  },
-  {
-    "hc-key": "cn-gx",
-    "value": 66
-  },
-  {
-    "hc-key": "cn-ln",
-    "value": 67
-  },
-  {
-    "hc-key": "cn-js",
-    "value": 68
-  },
-  {
-    "hc-key": "cn-gs",
-    "value": 69
-  },
-  {
-    "hc-key": "cn-sx",
-    "value": 70
-  },
-  {
-    "hc-key": "cn-he",
-    "value": 71
-  },
-  {
-    "hc-key": "cn-jx",
-    "value": 72
-  }
+  {name:"北京",value:1},
+  {name:"上海",value:50},
+  {name:"天津",value:3},
+  {name:"重庆",value:4},
+  {name:"黑龙江",value:2},
+  {name:"吉林",value:1},
+  {name:"辽宁",value:1},
+  {name:"内蒙古",value:0},
+  {name:"河北",value:0},
+  {name:"山西",value:0},
+  {name:"山东",value:0},
+  {name:"河南",value:0},
+  {name:"陕西",value:0},
+  {name:"甘肃",value:0},
+  {name:"宁夏",value:0},
+  {name:"青海",value:0},
+  {name:"新疆",value:0},
+  {name:"安徽",value:0},
+  {name:"江苏",value:0},
+  {name:"浙江",value:0},
+  {name:"湖南",value:0},
+  {name:"江西",value:0},
+  {name:"河北",value:0},
+  {name:"四川",value:0},
+  {name:"贵州",value:0},
+  {name:"福建",value:0},
+  {name:"台湾",value:0},
+  {name:"广东",value:0},
+  {name:"海南",value:0},
+  {name:"广西",value:0},
+  {name:"云南",value:0},
+  {name:"西藏",value:0},
+  {name:"香港",value:0},
+  {name:"澳门",value:0}
 ];
+var geoCoordMap = {
+  "北京":[116.28, 39.54],
+  "上海":[121.29, 31.14],
+  "天津":[117.11, 39.09],
+  "重庆":[106.32, 29.32],
+  "黑龙江":[126.41, 45.45],
+  "吉林":[125.19, 43.52],
+  "辽宁":[123.24, 41.50],
+  "内蒙古":[111.48, 40.49],
+  "河北":[114.28, 38.02],
+  "山西":[112.34, 37.52],
+  "山东":[117.00, 36.38],
+  "河南":[113.42, 34.48],
+  "陕西":[108.54, 34.16],
+  "甘肃":[103.49, 36.03],
+  "宁夏":[106.16, 38.20],
+  "青海":[101.45, 36.38],
+  "新疆":[87.36, 43.48],
+  "安徽":[117.18, 31.51],
+  "江苏":[118.50, 32.02],
+  "浙江":[120.09, 30.14],
+  "湖南":[113.00, 28.11],
+  "江西":[115.52, 28.41],
+  "河北":[114.21, 30.37],
+  "四川":[104.05, 30.39],
+  "贵州":[106.42, 26.35],
+  "福建":[119.18, 26.05],
+  "台湾":[121.31, 25.03],
+  "广东":[113.15, 23.08],
+  "海南":[110.20, 20.02],
+  "广西":[108.20, 22.48],
+  "云南":[102.41, 25.00],
+  "西藏":[90.08, 29.39],
+  "香港":[114.10, 22.18],
+  "澳门":[113.35, 22.14]
+};
 
-var config = {
-  chart : {
-    margin : [0,0,0,0],
-    backgroundColor: 'transparent'
-  },
-  credits: {
-    enabled : false
-  },
-  title : {
-    text : 'Highmaps basic demo'
-  },
-  subtitle : {
-    text : ''
-  },
-  mapNavigation: {
-    enabled: true,
-    buttonOptions: {
-      verticalAlign: 'bottom'
+
+
+var convertData = function (data) {
+  var res = [];
+  for (var i = 0; i < data.length; i++) {
+    var geoCoord = geoCoordMap[data[i].name];
+    if (geoCoord) {
+      res.push({
+        name: data[i].name,
+        value: geoCoord.concat(data[i].value)
+      });
+    }
+  }
+  return res;
+};
+
+let option = {
+  backgroundColor: '#404a59',
+  title: {
+    text: '开放平台SDK初始化次数',
+    subtext: '地区分布',
+    left: 'center',
+    top: '60px;',
+    textStyle: {
+      color: '#fff'
     }
   },
-  legend:{
-    enabled: false,
+  tooltip : {
+    trigger: 'item'
   },
-  colorAxis: {
-    min: 0
+  legend: {
+    orient: 'vertical',
+    y: 'bottom',
+    x:'right',
+    data:['SDK初始化次数'],
+    textStyle: {
+      color: '#fff'
+    }
   },
-
-  series : [{
-    data : data,
-    mapData: maps,
-    joinBy: 'hc-key',
-    name: 'Random data',
-    borderWidth: 0,
-    states: {
-      hover: {
-        color: '#a4edba'
+  geo: {
+    map: 'china',
+    label: {
+      emphasis: {
+        show: false
       }
     },
-    dataLabels: {
-      enabled: true,
-      format: '{point.name}'
+    roam: true,
+    itemStyle: {
+      normal: {
+        areaColor: '#323c48',
+        borderColor: '#111'
+      },
+      emphasis: {
+        areaColor: '#2a333d'
+      }
     }
-  }]
-}
+  },
+  series : [
+    {
+      name: 'SDK初始化次数',
+      type: 'scatter',
+      coordinateSystem: 'geo',
+      data: convertData(data),
+      symbolSize: function (val) {
+        let v = 0;
+        if (val[2] >= 10 && val[2] <= 100){
+          v = val[2];
+        }else if ( val[2] < 10){
+          v = 10;
+        }else if (val[2] > 100){
+          v = 100;
+        }
+        return v;
+      },
+      label: {
+        normal: {
+          formatter: '{b}',
+          position: 'right',
+          show: true
+        },
+        emphasis: {
+          show: true
+        }
+      },
+      itemStyle: {
+        normal: {
+          color: '#ddb926'
+        }
+      }
+    },
+    {
+      name: 'Top 5',
+      type: 'effectScatter',
+      coordinateSystem: 'geo',
+      data: convertData(data.sort(function (a, b) {
+        return b.value - a.value;
+      }).slice(0, 5)),
+      symbolSize: function (val) {
+        let v = 0;
+        if (val[2] >= 10 && val[2] <= 100){
+          v = val[2];
+        }else if ( val[2] < 10){
+          v = 10;
+        }else if (val[2] > 100){
+          v = 100;
+        }
+        return v;
+      },
+      showEffectOn: 'render',
+      rippleEffect: {
+        brushType: 'fill'
+      },
+      hoverAnimation: true,
+      label: {
+        normal: {
+          formatter: '{b}',
+          position: 'right',
+          show: true
+        }
+      },
+      itemStyle: {
+        normal: {
+          color: '#f4e925',
+          shadowBlur: 10,
+          shadowColor: '#333'
+        }
+      },
+      zlevel: 1
+    }
+  ]
+};
 
 class MapChart extends React.Component {
 
   render() {
     return(
       <div className = "MapChart">
-        <ReactHighmaps config={config} ></ReactHighmaps>
+      <ReactEcharts option={option} style={{height: '100%', width: '100%'}} />
       </div>
     );
   }
