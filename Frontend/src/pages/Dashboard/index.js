@@ -5,14 +5,14 @@ import {ajax} from '../../ajax.js';
 import './index.less';
 
 ajax({
-  url: 'http://10.129.34.226:10261/api/test',
+  url: 'https://hop.shrb.it/analysis/eventTrack',
   method: 'POST',
   async: true,
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/json'
   },
-  data: JSON.stringify({test:'send data'}),
+  data: {"test":"send data"},
   onprogress: function (evt) {
     // console.log(evt.position/evt.total);
   }
@@ -48,21 +48,21 @@ const data = {
   }
 };
 
-ajax({
-  url: 'http://10.129.34.226:10261/api/eventTrack',
-  method: 'POST',
-  async: true,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  },
-  data: JSON.stringify(data),
-  onprogress: function (evt) {
-    // console.log(evt.position/evt.total);
-  }
-})
-.then(function (xhr) { console.log(xhr.response); },
-function (e) { console.log(JSON.stringify(e)) });
+// ajax({
+//   url: 'http://10.129.34.226:10261/api/eventTrack',
+//   method: 'POST',
+//   async: true,
+//   headers: {
+//     'Content-Type': 'application/json',
+//     'Accept': 'application/json'
+//   },
+//   data: JSON.stringify(data),
+//   onprogress: function (evt) {
+//     // console.log(evt.position/evt.total);
+//   }
+// })
+// .then(function (xhr) { console.log(xhr.response); },
+// function (e) { console.log(JSON.stringify(e)) });
 
 // fetch("http://localhost:3301/api/todo_list", {
 //   method: "POST",
