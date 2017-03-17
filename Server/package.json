@@ -20,5 +20,8 @@
     "mongodb": "^2.2.24",
     "mongoskin": "^2.1.0",
     "node-uuid": "^1.4.7"
+  },
+  "devDependencies": {
+    "forever": "^0.15.3"
   }
 }
