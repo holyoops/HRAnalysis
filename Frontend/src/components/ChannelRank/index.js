@@ -90,26 +90,74 @@ let sort = ()=> {
   });
 }
 
+let createNumberClass = (item)=>{
+
+  let className = '';
+  if (item.item.rank === '1'){
+    className = ' channel-rank-number-first'
+  }else if (item.item.rank === '2'){
+    className = ' channel-rank-number-second'
+  }else if (item.item.rank === '3'){
+    className = ' channel-rank-number-third'
+  }
+
+  return 'channel-rank-cell channel-rank-number' + className;
+}
+
 class ChannelRank extends Component {
 
   componentDidMount(callback) {
-    console.log(items);
     sort();
-    console.log(items);
     this.setState({items: items});
   }
 
   render () {
   	return (
-      <div className=''>
+      <div className="ChannelRank">
+      <div className="channel-rank-row">
+        <div className="channel-rank-cell channel-rank-number channel-rank-row-title">
+          排名
+        </div>
+        <div className="channel-rank-cell channel-rank-app-ID channel-rank-row-title">
+          APP ID
+        </div>
+        <div className="channel-rank-cell channel-rank-init-count channel-rank-row-title">
+          初始化次数
+        </div>
+        <div className="channel-rank-cell channel-rank-pay-count channel-rank-row-title">
+          支付调用次数
+        </div>
+        <div className="channel-rank-cell channel-rank-debit-count channel-rank-row-title">
+          融资调用次数
+        </div>
+        <div className="channel-rank-cell channel-rank-purchase-count channel-rank-row-title">
+          投资调用次数
+        </div>
+      </div>
       {items.map((item) => {
         return (
-          <div>
-          {item.rank}&nbsp;{item.appID}
+          <div className="channel-rank-row">
+            <div className={createNumberClass({item})}>
+              {item.rank}
+            </div>
+            <div className="channel-rank-cell channel-rank-app-ID">
+              {item.appID}
+            </div>
+            <div className="channel-rank-cell channel-rank-init-count">
+              {item.initCount}
+            </div>
+            <div className="channel-rank-cell channel-rank-pay-count">
+              {item.payCount}
+            </div>
+            <div className="channel-rank-cell channel-rank-debit-count">
+              {item.debitCount}
+            </div>
+            <div className="channel-rank-cell channel-rank-purchase-count">
+              {item.purchaseCount}
+            </div>
           </div>
         )
       })}
-      <br/>
       </div>
     );
   }

@@ -17,22 +17,6 @@ const data = [
   {date: '1月16日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
   {date: '1月17日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
   {date: '1月18日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月19日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月20日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月21日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月22日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月23日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月24日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月25日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月26日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月27日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月28日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月29日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月30日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '1月31日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '2月01日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '2月02日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-  {date: '2月03日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
 ];
 
 const CustomTooltip  = React.createClass({
@@ -80,13 +64,13 @@ class SDKFuncCalledChart extends Component {
   	return (
       <div className='SDKFuncCalledChart'>
         <div className='title'>
-          近30天开放平台SDK调用次数
+          近14天开放平台SDK调用次数
         </div>
         <div className='chart-container'>
           <ResponsiveContainer>
           	<LineChart data={data}
                   margin={{top: 20, right: 8, left: 80, bottom: 40}} >
-             <XAxis dataKey="date" stroke="rgba(0,0,0,0)" tickSize={30} tick={{stroke: "#464C66"}} interval = {2} orientation="top"/>
+             <XAxis dataKey="date" stroke="rgba(0,0,0,0)" tickSize={30} tick={{stroke: "#464C66"}} interval = {0} orientation="top"/>
              <YAxis  stroke="#464C66" tickSize={60} tick={{stroke: "#464C66"}} tickLine={{stroke: "rgba(0,0,0,0)"}}/>
              <CartesianGrid stroke="#272D41" strokeDasharray="3 3"/>
              <Tooltip content={<CustomTooltip/>}/>

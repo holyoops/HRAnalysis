@@ -4,22 +4,6 @@ import DashboardBottom from 'components/DashboardBottom';
 import {ajax} from '../../ajax.js';
 import './index.less';
 
-ajax({
-  url: 'https://hop.shrb.it/analysis/eventTrack',
-  method: 'POST',
-  async: true,
-  headers: {
-    'Content-Type': 'application/json',
-    'Accept': 'application/json'
-  },
-  data: {"test":"send data"},
-  onprogress: function (evt) {
-    // console.log(evt.position/evt.total);
-  }
-})
-.then(function (xhr) { console.log(xhr.response); },
-function (e) { console.log(JSON.stringify(e)) });
-
 const data = {
   initID: 'uuid', // 本次初始化埋点SDK的ID
   eventID: 'uuid',
@@ -47,6 +31,24 @@ const data = {
     userAgent: ''
   }
 };
+
+ajax({
+  url: 'https://hop.shrb.it/analysis/eventTrack',
+  method: 'POST',
+  async: true,
+  headers: {
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  },
+  data: JSON.stringify(data),
+  onprogress: function (evt) {
+    // console.log(evt.position/evt.total);
+  }
+})
+.then(function (xhr) { console.log(xhr.response); },
+function (e) { console.log(JSON.stringify(e)) });
+
+
 
 // ajax({
 //   url: 'http://10.129.34.226:10261/api/eventTrack',
@@ -99,7 +101,7 @@ const data = {
 
 export default () => (
   <div className="pages-dashboard">
-    <SDKFuncCalledChart />
-    <DashboardBottom />
+    <SDKFuncCalledChart className="dashboard-top"/>
+    <DashboardBottom className="dashboard-bottom"/>
   </div>
 );
