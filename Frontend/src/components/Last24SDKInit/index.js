@@ -9,69 +9,69 @@ const allCount = 981;
 
 const items = [{
     count: '2k',
-    hour: '0~2',
+    hour: '0:00~2:00',
     style: {
-      height: '2%'
+      height: '32%'
     }
   },{
     count: '2k',
-    hour: '2~4',
+    hour: '2:00~4:00',
     style: {
       height: '1%'
     }
   },{
     count: '2k',
-    hour: '4~6',
+    hour: '4:00~6:00',
     style: {
       height: '0%'
     }
   },{
     count: '2k',
-    hour: '6~8',
+    hour: '6:00~8:00',
     style: {
-      height: '25%'
+      height: '65%'
     }
   },{
     count: '2k',
-    hour: '8~10',
+    hour: '8:00~10:00',
     style: {
-      height: '22%'
+      height: '87%'
     }
   },{
     count: '2k',
-    hour: '10~12',
+    hour: '10:00~12:00',
     style: {
-      height: '20%'
+      height: '89%'
     }
   },{
     count: '2k',
-    hour: '12~14',
+    hour: '12:00~14:00',
     style: {
-      height: '5%'
+      height: '76%'
     }
   },{
     count: '2k',
-    hour: '14~16',
+    hour: '14:00~16:00',
     style: {
-      height: '6%'
+      height: '66%'
     }
   },{
     count: '2k',
-    hour: '16~18',
+    hour: '16:00~18:00',
     style: {
-      height: '9%'
+      height: '87%'
     }
   },{
     count: '2k',
-    hour: '18~20',
+    hour: '18:00~20:00',
     style: {
-      height: '9%'
+      height: '100%'
     }
   },{
     count: '2k',
-    hour: '22~24',
+    hour: '22:00~24:00',
     style: {
-      height: '1%'
+      height: '32%'
     }
   }];
 
@@ -114,7 +114,13 @@ class Last24SDKInit extends Component {
                   {item.count}
                 </div>
                 <div className='Last24SDKInit-hour-bg'>
-                  <div className='Last24SDKInit-hour-bar' style={item.style}>
+                  <div className='Last24SDKInit-hour-bar'>
+                    <div className='Last24SDKInit-hour-bar-green' style={item.style}>
+                    </div>
+                  </div>
+                  <div className='Last24SDKInit-hour-bar'>
+                    <div className='Last24SDKInit-hour-bar-blue' style={item.style}>
+                    </div>
                   </div>
                 </div>
                 <div className='Last24SDKInit-hour-text'>

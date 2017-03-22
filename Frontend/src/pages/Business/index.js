@@ -1,22 +1,22 @@
 import React from 'react';
-import SDKFuncCalledChart from 'components/SDKFuncCalledChart';
+import BusinessChart from 'components/BusinessChart';
 import './index.less';
 export default () => (
   <div className="pages-business">
     <div className="business-top">
       <div className="business-top-left">
-        <SDKFuncCalledChart />
+        <BusinessChart title="最近14天开户数"/>
       </div>
       <div className="business-top-right">
-        <SDKFuncCalledChart />
+        <BusinessChart title="最近14天支付调用次数"/>
       </div>
     </div>
     <div className="business-bottom">
       <div className="business-right-left">
-        <SDKFuncCalledChart />
+        <BusinessChart title="最近14天融资调用次数"/>
       </div>
       <div className="business-right-right">
-        <SDKFuncCalledChart />
+        <BusinessChart title="最近14天投资调用次数"/>
       </div>
     </div>
   </div>

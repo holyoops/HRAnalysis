@@ -12,12 +12,6 @@
     border-bottom: 1px solid @darkBlueColor;
     line-height: 44px;
     color: @lightGrayColor;
-    .channel-rank-row-title{
-      font-weight: 300;
-      font-size: 14px;
-      color: white;
-      line-height: 40px;
-    }
     .channel-rank-cell{
       text-align: center;
     }
@@ -44,7 +38,6 @@
       width: 360px;
     }
     .channel-rank-init-count{
-
       flex: 1;
       color: white;
     }
@@ -59,9 +52,16 @@
     .channel-rank-purchase-count{
       flex: 1;
     }
+    .channel-rank-row-title{
+      font-weight: 300;
+      font-size: 14px;
+      color: white;
+      line-height: 40px;
+      text-shadow: 0 0 2px @lightBlueColor;
+    }
   }
   .channel-rank-row:first-child{
-    border-bottom: 1px dashed white;
+    border-bottom: 1px dashed @lightBlueColor;
   }
   .channel-rank-row:nth-child(2){
     margin-top: 16px;

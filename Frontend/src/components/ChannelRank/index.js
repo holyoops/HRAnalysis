@@ -115,22 +115,22 @@ class ChannelRank extends Component {
   	return (
       <div className="ChannelRank">
       <div className="channel-rank-row">
-        <div className="channel-rank-cell channel-rank-number channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-number">
           排名
         </div>
-        <div className="channel-rank-cell channel-rank-app-ID channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-app-ID">
           APP ID
         </div>
-        <div className="channel-rank-cell channel-rank-init-count channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-init-count">
           初始化次数
         </div>
-        <div className="channel-rank-cell channel-rank-pay-count channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-pay-count">
           支付调用次数
         </div>
-        <div className="channel-rank-cell channel-rank-debit-count channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-debit-count">
           融资调用次数
         </div>
-        <div className="channel-rank-cell channel-rank-purchase-count channel-rank-row-title">
+        <div className="channel-rank-cell channel-rank-row-title channel-rank-purchase-count">
           投资调用次数
         </div>
       </div>

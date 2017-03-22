@@ -34,8 +34,7 @@ const CustomTooltip  = React.createClass({
       return (
         <div className="custom-tooltip">
           <p className="label">{`${label}`}</p>
-          <p className="label">{`功能调用 ${payload[1].value} 次`}</p>
-          <p className="label">{`SDK初始化 ${payload[0].value} 次`}</p>
+          <p className="label">{`功能调用 ${payload[0].value} 次`}</p>
         </div>
       );
     }
@@ -44,7 +43,7 @@ const CustomTooltip  = React.createClass({
   }
 });
 
-class SDKFuncCalledChart extends Component {
+class BusinessChart extends Component {
 
   constructor(props) {
     super(props);
@@ -64,16 +63,15 @@ class SDKFuncCalledChart extends Component {
   	return (
       <div className='SDKFuncCalledChart'>
         <div className='title'>
-          <span>近14天开放平台SDK调用次数</span>
+          <span>{this.props.title}</span>
         </div>
         <div className='chart-container'>
           <ResponsiveContainer>
-            <LineChart data={data} margin={{top: 20, right: 8, left: 80, bottom: 40}} >
-              <XAxis dataKey="date" stroke="rgba(0,0,0,0)" tickSize={30} tick={{stroke: "#464C66"}} interval = {0} orientation="top"/>
-              <YAxis  stroke="#464C66" tickSize={60} tick={{stroke: "#464C66"}} tickLine={{stroke: "rgba(0,0,0,0)"}}/>
+            <LineChart data={data} margin={{top: 20, right: 8, left: 40, bottom: 40}} >
+              <XAxis dataKey="date" stroke="rgba(0,0,0,0)" tickSize={30} tick={{stroke: "#464C66"}} interval = {2} orientation="top"/>
+              <YAxis  stroke="#464C66" tickSize={20} tick={{stroke: "#464C66"}} tickLine={{stroke: "rgba(0,0,0,0)"}}/>
               <CartesianGrid stroke="#272D41" strokeDasharray="3 3"/>
               <Tooltip content={<CustomTooltip/>}/>
-              <Line type="monotone" name="SDK初始化次数" dataKey="SDK" stroke="#29B5A5" strokeWidth={2} dot={false}/>
               <Line type="monotone" name="功能调用次数" dataKey="func" stroke="#6496FB" strokeWidth={2} dot={false} height={50}/>
             </LineChart>
           </ResponsiveContainer>
@@ -83,4 +81,4 @@ class SDKFuncCalledChart extends Component {
     );
   }
 }
-export default SDKFuncCalledChart;
+export default BusinessChart;

@@ -7,14 +7,14 @@ class DashboardBottom extends Component {
   render () {
   	return (
       <div className='DashboardBottom'>
-        <div className="left">
-        </div>
+        {/*<div className="left">
+        </div>*/}
         <div className="center">
           <Last24SDKInit />
         </div>
-        <div className="right">
+        {/*<div className="right">
           <ProgressRing />
-        </div>
+        </div>*/}
       </div>
     );
   }
