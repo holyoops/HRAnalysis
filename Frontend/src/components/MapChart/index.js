@@ -96,7 +96,7 @@ var convertData = function (data) {
 };
 
 let option = {
-  backgroundColor: '#404a59',
+  backgroundColor: 'linear-gradient(150deg,#272f47,#1F263E)',
   title: {
     text: '开放平台SDK初始化次数',
     subtext: '地区分布',
