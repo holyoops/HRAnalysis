@@ -44,7 +44,7 @@ const cors = Cors({
 
   router
   .prefix('/api')
-  .post('/test', function (ctx, next) {
+  .get('/test', function (ctx, next) {
     return ctx.body = {test:'success'};
   })
   .post('/eventTrack', function (ctx, next) {
@@ -55,18 +55,25 @@ const cors = Cors({
     return ctx.status = 204;
   })
   .get('/getAll', async function(ctx, next){
-
+    
+    let body = ctx.request.body;
     let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
-
-    // this.body = yield new Promise(function (resolve, reject) {
-    //   db.front.find().toArray(function(e, r) {
-    //     resolve(r);
-    //   });
-    // }).then(function (data) {
-    //   return {count: data.length};
-    // });
-    await db.front.count({},function(e,r) {
-         return {count: r}
+    log('api/eventTrack', body, ctx.header.origin, clientIP);
+    function fetchDB() {
+      return new Promise((resolve, reject) => {
+        db.front.count({},function(e,r) {
+            if (e) {
+              reject(e);
+            }else {
+              resolve(r);
+            }
+        });
+      });
+    }
+    await fetchDB().then((count) => {
+      return ctx.body = {count: count};
+    }).catch((error) => {
+      return ctx.body = {errMsg: 'database error: ' + error}
     });
 
   })

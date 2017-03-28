@@ -85,7 +85,7 @@ var ajaxOptions = {
                 resolve(xhr);
             else
                 reject({
-                    errorType: 'status_error',
+                    errorType: xhr.status,
                     xhr: xhr
                 })
         }

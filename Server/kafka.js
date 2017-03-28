@@ -27,12 +27,12 @@ producer.on('ready', function () {
     attributes: 0 // default: 0
   }];
   producer.send(payloads, function (err, data) {
-    console.log(err);
+    //console.log(err);
   });
 
 
 }).on('error',function(e) {
-  console.log('e');
+  //console.log('e');
 });
 
 module.exports = function (data){

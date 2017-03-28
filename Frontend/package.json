@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack --config webpack.dll.config.js && webpack-dev-server --hot --inline --open",
     "dll": "webpack --config webpack.dll.config.js",
-    "build": "webpack --progress --profile --colors --display-modules --config webpack.dll.config.js && webpack --progress --profile --colors --display-modules && node app.js"
+    "build": "webpack --progress --profile --colors --display-modules --config webpack.dll.config.js && webpack --progress --profile --colors --display-modules && node app.js DEV"
   },
   "author": "CJ",
   "license": "MIT",
