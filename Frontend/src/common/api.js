@@ -3,8 +3,8 @@ import {ajax} from 'common/ajax.js';
 
 export function getAllCount() {
   ajax({
-    url: __GLOBAL('HOST_URL') + 'test',
-    method: 'POST',
+    url: __GLOBAL('HOST_URL') + 'getAll',
+    method: 'GET',
     async: true,
     headers: {
       'Content-Type': 'application/json',
