@@ -52,7 +52,6 @@ export function postEvent() {
     initID: 'uuid', // 本次初始化埋点SDK的ID
     eventID: 'uuid',
     appAccessToken: 'c7c6977c516f176197c9605f98e6310e',
-    timestamp: 'yyyymmddhhmmss',
     name:'name',
     appID: '575773de-9d65-4e60-abf9-e6fadda9dfbf',
     openID: 'openID', // 开放平台openID
