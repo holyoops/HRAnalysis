@@ -3,13 +3,11 @@ import SDKFuncCalledChart from 'components/SDKFuncCalledChart';
 import DashboardBottom from 'components/DashboardBottom';
 import './index.less';
 
-import {postEvent} from 'common/api.js';
+import {postEvent, getAllCount, getUsersLocation} from 'common/api.js';
 
 postEvent();
-
-import {getAllCount} from 'common/api.js';
-
 getAllCount();
+getUsersLocation();
 
 export default () => (
   <div className="pages-dashboard">

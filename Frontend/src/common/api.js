@@ -14,17 +14,47 @@ export function getAllCount() {
       // console.log(evt.position/evt.total);
     }
   })
-  .then(function (xhr) { console.log(xhr.response); },
-  function (e) { console.log(JSON.stringify(e)) });
+  .then(function (xhr) {
+    console.log(xhr.response);
+    return xhr.response;
+  },
+  function (e) {
+    console.log(JSON.stringify(e));
+    return
+  });
+}
+
+export function getUsersLocation() {
+  ajax({
+    url: __GLOBAL('HOST_URL') + 'getUsersLocation',
+    method: 'GET',
+    async: true,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    onprogress: function (evt) {
+      // console.log(evt.position/evt.total);
+    }
+  })
+  .then(function (xhr) {
+    console.log(xhr.response);
+    return xhr.response;
+  },
+  function (e) {
+    console.log(JSON.stringify(e));
+    return
+  });
 }
 
 export function postEvent() {
   const data = {
     initID: 'uuid', // 本次初始化埋点SDK的ID
     eventID: 'uuid',
+    appAccessToken: 'c7c6977c516f176197c9605f98e6310e',
     timestamp: 'yyyymmddhhmmss',
     name:'name',
-    appID: 'appID',
+    appID: '575773de-9d65-4e60-abf9-e6fadda9dfbf',
     openID: 'openID', // 开放平台openID
     traceID: 'traceID',
     message: {
@@ -54,7 +84,9 @@ export function postEvent() {
     async: true,
     headers: {
       'Content-Type': 'application/json',
-      'Accept': 'application/json'
+      'Accept': 'application/json',
+      'appAccessToken': '5052ae43269145fff702d03eeea15062',
+      'appID': '575773de-9d65-4e60-abf9-e6fadda9dfbf'
     },
     data: JSON.stringify(data),
     onprogress: function (evt) {

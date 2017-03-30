@@ -19,7 +19,8 @@
     "koa-static": "^3.0.0",
     "mongodb": "^2.2.24",
     "mongoskin": "^2.1.0",
-    "node-uuid": "^1.4.7"
+    "node-uuid": "^1.4.7",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "forever": "^0.15.3"
