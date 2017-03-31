@@ -8,67 +8,67 @@ const divStyle = {
 const allCount = 981;
 
 const items = [{
-    count: '2k',
+    count: '320',
     hour: '0:00~2:00',
     style: {
       height: '32%'
     }
   },{
-    count: '2k',
+    count: '2',
     hour: '2:00~4:00',
     style: {
       height: '1%'
     }
   },{
-    count: '2k',
+    count: '0',
     hour: '4:00~6:00',
     style: {
       height: '0%'
     }
   },{
-    count: '2k',
+    count: '650',
     hour: '6:00~8:00',
     style: {
       height: '65%'
     }
   },{
-    count: '2k',
+    count: '870',
     hour: '8:00~10:00',
     style: {
       height: '87%'
     }
   },{
-    count: '2k',
+    count: '890',
     hour: '10:00~12:00',
     style: {
       height: '89%'
     }
   },{
-    count: '2k',
+    count: '760',
     hour: '12:00~14:00',
     style: {
       height: '76%'
     }
   },{
-    count: '2k',
+    count: '660',
     hour: '14:00~16:00',
     style: {
       height: '66%'
     }
   },{
-    count: '2k',
+    count: '870',
     hour: '16:00~18:00',
     style: {
       height: '87%'
     }
   },{
-    count: '2k',
+    count: '1000',
     hour: '18:00~20:00',
     style: {
       height: '100%'
     }
   },{
-    count: '2k',
+    count: '320',
     hour: '22:00~24:00',
     style: {
       height: '32%'

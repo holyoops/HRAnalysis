@@ -1,3 +1,4 @@
+const __CONST = require('./common/const.js');
 const Koa = require("koa");
 const Serve = require('koa-static');
 const Router = require('koa-router');
@@ -15,6 +16,36 @@ const bodyParser = BodyParser({
     ctx.throw('body parse error', 422);
   }
 });
+
+const ENV = process.argv.splice(2)[0];
+
+switch (ENV) {
+  case 'DEV':
+    console.log('DEV');
+    break;
+  case 'SIT':
+    console.log('SIT');
+    break;
+
+  default:
+
+}
+
+if (ENV === 'DEV') {
+  console.log('DEV');
+}else if (ENV === 'SIT') {
+  console.log('SIT');
+}else if (ENV === 'UAT') {
+  console.log('UAT');
+}else if (ENV === 'PRE_RELEASE') {
+  console.log('PRE_RELEASE');
+}else if (ENV === 'RELEASE') {
+  console.log('RELEASE');
+}else {
+  console.log('环境配置错误，请检查启动参数（DEV/SIT/UAT/PRE_RELEASE/RELEASE）');
+  process.exit();
+}
+
 
 const db = mongo.db('mongodb://10.128.166.43/logi_anal', {native_parser:true});
 
@@ -79,14 +110,10 @@ router
 
   function fetchDB (){
     return new Promise((resolve, reject) => {
+
       db.bind('front_report_city');
       db.front_report_city.aggregate(
         [{
-          $project: {
-            't': "$cnt"
-          }
-        },
-        {
           $group: {
             _id: "$_id.province",
             value: {
@@ -96,7 +123,7 @@ router
         },
         {
           $sort: {
-            value: -1
+            value: 1
           }
         },
         {
@@ -113,8 +140,18 @@ router
 
   await fetchDB().then((data) => {
 
+    let result = new Array();
+
+    for (let d in data) {
+      let r = {
+        province: d._id,
+        value: d.value
+      }
+      result.push(r);
+    }
+
     return ctx.body = {
-      data: data,
+      data: result,
       error: null
     };
 
