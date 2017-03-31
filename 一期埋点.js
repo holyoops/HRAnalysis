@@ -2,6 +2,7 @@
 
 {
   initID: uuid, // 本次初始化埋点SDK的ID
+  accessToken: ''
   name:'name',
   appID: appID,
   openID: openID, // 开放平台openID

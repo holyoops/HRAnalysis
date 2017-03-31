@@ -17,7 +17,6 @@ const bodyParser = BodyParser({
 });
 
 const db = mongo.db('mongodb://10.128.166.43/logi_anal', {native_parser:true});
-db.bind('front_report');
 
 const originList = [
   'http://localhost:10262',
@@ -46,9 +45,8 @@ router
 .get('/test', function (ctx, next) {
   return ctx.body = {test:'success'};
 })
-.get('/totalCount2Week', function () {
+.get('/getLastTwoWeeksData', function () {
   var today = new Date();
-  console.log(today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate());
   var date = new Date(today);
   date.setDate(today.getDate()-1);
   var times = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
@@ -71,51 +69,58 @@ router
       {date: '1月18日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
     ]
   }
+
   return {
     today: today,
     date: date
   };
 })
-.get('/getUsersLocation', function (ctx, next) {
+.get('/getUsersLocation', async (ctx, next) => {
 
-  var data = [
-    {name:"北京",value:1},
-    {name:"上海",value:50},
-    {name:"天津",value:3},
-    {name:"重庆",value:4},
-    {name:"黑龙江",value:2},
-    {name:"吉林",value:1},
-    {name:"辽宁",value:1},
-    {name:"内蒙古",value:0},
-    {name:"河北",value:0},
-    {name:"山西",value:0},
-    {name:"山东",value:0},
-    {name:"河南",value:0},
-    {name:"陕西",value:0},
-    {name:"甘肃",value:0},
-    {name:"宁夏",value:0},
-    {name:"青海",value:0},
-    {name:"新疆",value:0},
-    {name:"安徽",value:0},
-    {name:"江苏",value:0},
-    {name:"浙江",value:0},
-    {name:"湖南",value:0},
-    {name:"江西",value:0},
-    {name:"河北",value:0},
-    {name:"四川",value:0},
-    {name:"贵州",value:0},
-    {name:"福建",value:0},
-    {name:"台湾",value:0},
-    {name:"广东",value:0},
-    {name:"海南",value:0},
-    {name:"广西",value:0},
-    {name:"云南",value:0},
-    {name:"西藏",value:0},
-    {name:"香港",value:0},
-    {name:"澳门",value:0}
-  ];
+  function fetchDB (){
+    return new Promise((resolve, reject) => {
+      db.bind('front_report_city');
+      db.front_report_city.aggregate(
+        [{
+          $project: {
+            't': "$cnt"
+          }
+        },
+        {
+          $group: {
+            _id: "$_id.province",
+            value: {
+              $sum: '$cnt'
+            }
+          }
+        },
+        {
+          $sort: {
+            value: -1
+          }
+        },
+        {
+          $limit: 5
+        }], (e, r) => {
+        if (e) {
+          reject(e);
+        }else{
+          resolve(r);
+        }
+      });
+    });
+  }
 
-  return ctx.body = {data: data};
+  await fetchDB().then((data) => {
+
+    return ctx.body = {
+      data: data,
+      error: null
+    };
+
+  }).catch((error) => {
+    return ctx.body = {error: error};
+  });
 
 });
 
