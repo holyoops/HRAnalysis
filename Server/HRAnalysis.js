@@ -83,7 +83,12 @@ router
       db.front_report_city.aggregate(
         [{
           $project: {
-            't': "$cnt"
+            province: 1,
+            cnt: 1,
+            _id: {
+              province: 1,
+              time: 1
+            }
           }
         },
         {

@@ -27,24 +27,18 @@ switch (ENV) {
   case 'SIT':
     console.log('SIT');
     break;
-
+  case 'UAT':
+    console.log('UAT');
+    break;
+  case 'PRE_RELEASE':
+    console.log('PRE_RELEASE');
+    break;
+  case 'RELEASE':
+    console.log('RELEASE');
+    break;
   default:
-
-}
-
-if (ENV === 'DEV') {
-  console.log('DEV');
-}else if (ENV === 'SIT') {
-  console.log('SIT');
-}else if (ENV === 'UAT') {
-  console.log('UAT');
-}else if (ENV === 'PRE_RELEASE') {
-  console.log('PRE_RELEASE');
-}else if (ENV === 'RELEASE') {
-  console.log('RELEASE');
-}else {
-  console.log('环境配置错误，请检查启动参数（DEV/SIT/UAT/PRE_RELEASE/RELEASE）');
-  process.exit();
+    console.log('环境配置错误，请检查启动参数（DEV/SIT/UAT/PRE_RELEASE/RELEASE）');
+    process.exit();
 }
 
 // COR LIST
