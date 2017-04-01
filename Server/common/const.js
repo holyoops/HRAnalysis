@@ -17,7 +17,7 @@ module.exports = function (key, env){
     },
     RELEASE: {
       HOST_URL: ''
-    }
+    },
     COMMON: {
 
     }
