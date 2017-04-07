@@ -51,7 +51,7 @@
           text-align: center;
           font-size: 12px;
           font-weight: 100;
-          color: #464C66;
+          color: @lightGrayColor;
           padding-top: 8px;
           margin: 0 auto;
           width: 150px;
@@ -88,7 +88,7 @@
           text-align: center;
           font-size: 12px;
           font-weight: 100;
-          color: #464C66;
+          color: @lightGrayColor;
           padding-top: 8px;
           margin: 0 auto;
           width: 150px;
@@ -137,10 +137,18 @@
             .LastSDKInit-hour-bar-green{
               background-color: #29B5A5;
               box-shadow: 0 0 2px #29B5A5;
+              transition: all .3s;
             }
             .LastSDKInit-hour-bar-blue{
               background-color: @lightBlueColor;
               box-shadow: 0 0 2px @lightBlueColor;
+              transition: all .3s;
+            }
+            .LastSDKInit-hour-bar-green:hover{
+              box-shadow: 0 0 6px #29B5A5;
+            }
+            .LastSDKInit-hour-bar-blue:hover{
+              box-shadow: 0 0 6px @lightBlueColor;
             }
           }
           .LastSDKInit-hour-bar:nth-child(2){
