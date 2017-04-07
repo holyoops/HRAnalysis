@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {__GLOBAL} from 'common/config.js';
+import {ajax} from 'common/ajax.js';
 import './index.less';
 
 const divStyle = {
@@ -8,67 +10,78 @@ const divStyle = {
 const allCount = 981;
 
 const items = [{
-    count: '320',
+    othersCount: '320',
+    SDKInitCount: '180',
     hour: '0:00~2:00',
     style: {
       height: '32%'
     }
   },{
-    count: '2',
+    othersCount: '2',
+    SDKInitCount: '180',
     hour: '2:00~4:00',
     style: {
       height: '1%'
     }
   },{
-    count: '0',
+    othersCount: '0',
+    SDKInitCount: '180',
     hour: '4:00~6:00',
     style: {
       height: '0%'
     }
   },{
-    count: '650',
+    othersCount: '650',
+    SDKInitCount: '180',
     hour: '6:00~8:00',
     style: {
       height: '65%'
     }
   },{
-    count: '870',
+    othersCount: '870',
+    SDKInitCount: '180',
     hour: '8:00~10:00',
     style: {
       height: '87%'
     }
   },{
-    count: '890',
+    othersCount: '890',
+    SDKInitCount: '180',
     hour: '10:00~12:00',
     style: {
       height: '89%'
     }
   },{
-    count: '760',
+    othersCount: '760',
+    SDKInitCount: '180',
     hour: '12:00~14:00',
     style: {
       height: '76%'
     }
   },{
-    count: '660',
+    othersCount: '660',
+    SDKInitCount: '180',
     hour: '14:00~16:00',
     style: {
       height: '66%'
     }
   },{
-    count: '870',
+    othersCount: '870',
+    SDKInitCount: '180',
     hour: '16:00~18:00',
     style: {
       height: '87%'
     }
   },{
-    count: '1000',
+    othersCount: '1000',
+    SDKInitCount: '180',
     hour: '18:00~20:00',
     style: {
       height: '100%'
     }
   },{
-    count: '320',
+    othersCount: '320',
+    SDKInitCount: '180',
     hour: '22:00~24:00',
     style: {
       height: '32%'
@@ -76,6 +89,29 @@ const items = [{
   }];
 
 class Last24SDKInit extends Component {
+    constructor(props) {
+        super(props);
+        props.ajax = ajax({
+            url: __GLOBAL('HOST_URL') + 'getLast24HoursData'
+        });
+
+        this.state = {
+            data: []
+        };
+    }
+
+    componentDidMount() {
+        this.props.ajax.then(xhr => {
+            console.log(JSON.parse(xhr.response).data);
+            this.setState({
+                data: JSON.parse(xhr.response).data
+            })
+        },
+        function (e) {
+            console.log(JSON.stringify(e));
+            return;
+        });
+    }
 
   render () {
   	return (
@@ -107,19 +143,20 @@ class Last24SDKInit extends Component {
         </div>
         <div className='Last24SDKInit-bottom'>
           <div className='Last24SDKInit-hour-container'>
-          {items.map((item) => {
+          {this.state.data.map((item) => {
             return (
               <div className='Last24SDKInit-hour'>
                 <div className='Last24SDKInit-hour-count'>
-                  {item.count}
+                  {item.SDKInitCount}/{item.othersCount}
                 </div>
                 <div className='Last24SDKInit-hour-bg'>
                   <div className='Last24SDKInit-hour-bar'>
-                    <div className='Last24SDKInit-hour-bar-green' style={item.style}>
+                    <div className='Last24SDKInit-hour-bar-green' style='height:'+{item.style.othersHeight}>
+                        {item.style.othersHeight}
                     </div>
                   </div>
                   <div className='Last24SDKInit-hour-bar'>
-                    <div className='Last24SDKInit-hour-bar-blue' style={item.style}>
+                    <div className='Last24SDKInit-hour-bar-blue' style={item.style.SDKInitHeight}>
                     </div>
                   </div>
                 </div>

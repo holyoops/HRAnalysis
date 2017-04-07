@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import {__GLOBAL} from 'common/config.js';
+import {ajax} from 'common/ajax.js';
 import './index.less';
 
 const items = [
@@ -106,9 +108,33 @@ let createNumberClass = (item)=>{
 
 class ChannelRank extends Component {
 
-  componentDidMount(callback) {
-    sort();
-    this.setState({items: items});
+  // componentDidMount(callback) {
+  //   sort();
+  //   this.setState({items: items});
+  // }
+
+  constructor(props) {
+      super(props);
+      props.ajax = ajax({
+          url: __GLOBAL('HOST_URL') + 'getChannelData'
+      });
+
+      this.state = {
+          data: []
+      };
+  }
+
+  componentDidMount() {
+      this.props.ajax.then(xhr => {
+          let xhrJSON = JSON.parse(xhr.response);
+          this.setState({
+              data: xhrJSON.data
+          })
+      },
+      function (e) {
+          console.log(JSON.stringify(e));
+          return;
+      });
   }
 
   render () {
@@ -122,8 +148,9 @@ class ChannelRank extends Component {
           APP ID
         </div>
         <div className="channel-rank-cell channel-rank-row-title channel-rank-init-count">
-          初始化次数
+          开户数
         </div>
+        {/*
         <div className="channel-rank-cell channel-rank-row-title channel-rank-pay-count">
           支付调用次数
         </div>
@@ -133,8 +160,9 @@ class ChannelRank extends Component {
         <div className="channel-rank-cell channel-rank-row-title channel-rank-purchase-count">
           投资调用次数
         </div>
+        */}
       </div>
-      {items.map((item) => {
+      {this.state.data.map((item) => {
         return (
           <div className="channel-rank-row">
             <div className={createNumberClass({item})}>
@@ -144,8 +172,9 @@ class ChannelRank extends Component {
               {item.appID}
             </div>
             <div className="channel-rank-cell channel-rank-init-count">
-              {item.initCount}
+              {item.openAccountCount}
             </div>
+            {/*
             <div className="channel-rank-cell channel-rank-pay-count">
               {item.payCount}
             </div>
@@ -155,6 +184,7 @@ class ChannelRank extends Component {
             <div className="channel-rank-cell channel-rank-purchase-count">
               {item.purchaseCount}
             </div>
+            */}
           </div>
         )
       })}

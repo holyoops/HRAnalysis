@@ -76,42 +76,61 @@ router
     return ctx.body = {test:'success'};
 })
 .get('/getLastTwoWeeksData', async function (ctx, next) {
-    var today = new Date();
-    var date = new Date(today);
-    date.setDate(today.getDate()-1);
-    var times = date.getFullYear()+"-"+(date.getMonth()+1)+"-"+date.getDate();
-    console.log(times);
-    // let data = {
-    //     data : [
-    //         {date: '1月05日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月06日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月07日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月08日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月09日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月10日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月11日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月12日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月13日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月14日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月15日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月16日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月17日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //         {date: '1月18日', func: Math.random().toFixed(3)*2000, SDK: Math.random().toFixed(3)*2000},
-    //     ]
-    // }
 
-    function fetchDB (){
+    let today = new Date();
+    let daysRegExp = '';
+    let othersList;
+    let initList;
+    let result = [];
+
+    for (let i = 1; i < 15; i++) {
+        let date = new Date(today);
+        date.setDate(today.getDate()-i);
+        let m = date.getMonth() + 1 + '';
+        if ( m < 10 ) {
+            m = '0' + m;
+        }
+        let d = date.getDate() + '';
+        if ( d < 10 ) {
+            d = '0' + d;
+        }
+        let day = date.getFullYear() + "-" + m + "-" + d;
+        daysRegExp = daysRegExp + day + ((i === 14) ? '' : '|') ;
+
+        result.push({
+            date: day,
+            formatedDate: m + '月' + d + '日',
+            othersCount: 0,
+            SDKInitCount: 0
+        });
+    }
+
+    function fetchDB (date, type){
         return new Promise((resolve, reject) => {
-            let s = '2017-03-20|2017-03-18';
+
+            let r = new RegExp('(' + date + ')');
+            let match;
+            if (type === 'others') {
+                match = {'_id.time' : r, '_id.name': {$ne: 'INIT_DEVICE_INFO'}};
+            }else if (type === 'init'){
+                match = {'_id.time' : r, '_id.name': 'INIT_DEVICE_INFO'};
+            }else if (type === 'pay'){
+                match = {'_id.time' : r, '_id.name': 'PAY_USER_CONSUMING'};
+            }else if (type === 'purchase'){
+                match = {'_id.time' : r, '_id.name': 'PURCHASE_USER_CONSUMING'};
+            }else if (type === 'debit'){
+                match = {'_id.time' : r, '_id.name': 'DEBIT_USER_CONSUMING'};
+            }else if (type === 'openAccount'){
+                match = {'_id.time' : r, '_id.name': 'CREATE_ACCOUNT_SUCCESS'};
+            }
             db.bind('front_report');
             db.front_report.aggregate([
-                {$match : { '_id.time' : /()/ } },
-                {$group: {_id: {name:"$_id.name"},value: {$sum: '$cnt'}}},
-                {$sort: {value: 1}}
+                {$match: match},
+                {$project: {'_id.name': 1, '_id.time':{$substr: [ "$_id.time", 0, 10]}, cnt: 1}},
+                {$group: {_id: {time:'$_id.time'},value: {$sum: '$cnt'}}},
+                {$sort: {'_id.time': 1}}
             ],
             (error, result) => {
-                console.log('e:'+error);
-                console.log('r:'+result);
                 if (error) {
                     reject(error);
                 }else{
@@ -121,26 +140,258 @@ router
         });
     }
 
-    await fetchDB().then((data) => {
-        let result = data;
-        // let result = new Array();
-        //
-        // for (let i in data) {
-        //     let r = {
-        //         province: data[i]._id,
-        //         value: data[i].value
-        //     }
-        //     result.push(r);
-        // }
+    await fetchDB(daysRegExp, 'others').then((r) => {
 
+        for (let i in result) {
+            i = parseInt(i);
+            for (let j in r) {
+                j = parseInt(j);
+                if (r[j]._id.time === result[i].date) {
+                    result[i].othersCount = r[j].value;
+                }
+            }
+        }
+    }).catch((e) => {
         return ctx.body = {
             data: result,
-            errorCode: null
+            errorCode: e
         };
-
-    }).catch((error) => {
-        return ctx.body = {error: error};
     });
+
+    await fetchDB(daysRegExp, 'init').then((r) => {
+        for (let i in result) {
+            i = parseInt(i);
+            for (let j in r) {
+                j = parseInt(j);
+                if (r[j]._id.time === result[i].date) {
+                    result[i].SDKInitCount = r[j].value;
+                }
+            }
+        }
+    }).catch((e) => {
+        return ctx.body = {
+            data: result,
+            errorCode: e
+        };
+    });
+
+    if (ctx.query.type === 'business') {
+        await fetchDB(daysRegExp, 'openAccount').then((r) => {
+            for (let i in result) {
+                i = parseInt(i);
+                for (let j in r) {
+                    j = parseInt(j);
+                    if (r[j]._id.time === result[i].date) {
+                        result[i].openAccountCount = r[j].value;
+                    }
+                }
+            }
+        }).catch((e) => {
+            return ctx.body = {
+                data: result,
+                errorCode: e
+            };
+        });
+
+        await fetchDB(daysRegExp, 'purchase').then((r) => {
+            for (let i in result) {
+                i = parseInt(i);
+                for (let j in r) {
+                    j = parseInt(j);
+                    if (r[j]._id.time === result[i].date) {
+                        result[i].purchaseCount = r[j].value;
+                    }
+                }
+            }
+        }).catch((e) => {
+            return ctx.body = {
+                data: result,
+                errorCode: e
+            };
+        });
+
+        await fetchDB(daysRegExp, 'debit').then((r) => {
+            for (let i in result) {
+                i = parseInt(i);
+                for (let j in r) {
+                    j = parseInt(j);
+                    if (r[j]._id.time === result[i].date) {
+                        result[i].debitCount = r[j].value;
+                    }
+                }
+            }
+        }).catch((e) => {
+            return ctx.body = {
+                data: result,
+                errorCode: e
+            };
+        });
+
+        await fetchDB(daysRegExp, 'pay').then((r) => {
+            for (let i in result) {
+                i = parseInt(i);
+                for (let j in r) {
+                    j = parseInt(j);
+                    if (r[j]._id.time === result[i].date) {
+                        result[i].payCount = r[j].value;
+                    }
+                }
+            }
+        }).catch((e) => {
+            return ctx.body = {
+                data: result,
+                errorCode: e
+            };
+        });
+    }
+
+    return ctx.body = {
+        data: result,
+        errorCode: null
+    };
+})
+.get('/getLast12HoursData', async function (ctx, next) {
+
+    let today = new Date();
+    let daysRegExp = '';
+    let othersList;
+    let initList;
+    let result = [];
+
+    let maxOthersCount = 0;
+    let maxInitCount = 0;
+
+    let sumOthersCount = 0;
+    let sumInitCount = 0;
+
+    for (let i = 1; i < 13; i++) {
+        let date = new Date(today);
+        date.setHours(today.getHours()-i);
+        let m = date.getMonth() + 1;
+        if ( m < 10 ) {
+            m = '0' + m;
+        }
+        m = m + '';
+        let d = date.getDate();
+        if ( d < 10 ) {
+            d = '0' + d;
+        }
+        d = d + '';
+        let h = date.getHours();
+        let hour = h;
+        if ( h < 10 ) {
+            h = '0' + h;
+        }
+        h = h + '';
+        let day = date.getFullYear() + '-' + m + '-' + d + ' ' + h;
+        daysRegExp = daysRegExp + day + ((i === 12) ? '' : '|') ;
+
+        result.push({
+            date: day,
+            hour: ( hour ) + '点~' + ( hour + 1 )  + '点',
+            othersCount: 0,
+            SDKInitCount: 0
+        });
+    }
+
+    function fetchDB (date, type){
+        return new Promise((resolve, reject) => {
+
+            let r = new RegExp('(' + date + ')');
+            let match;
+            if (type === 'others') {
+                match = {'_id.time' : r, '_id.name': {$ne: 'INIT_DEVICE_INFO'}};
+            }else{
+                match = {'_id.time' : r, '_id.name': 'INIT_DEVICE_INFO'};
+            }
+            db.bind('front_report');
+            db.front_report.aggregate([
+                {$match: match},
+                {$group: {_id: {time:'$_id.time'},value: {$sum: '$cnt'}}},
+                {$sort: {'_id.time': 1}}
+            ],
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                }else{
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    await fetchDB(daysRegExp, 'others').then((r) => {
+        for (let i in result) {
+            i = parseInt(i);
+            for (let j in r) {
+                j = parseInt(j);
+                maxOthersCount = ( maxOthersCount < r[j].value ) ? r[j].value : maxOthersCount;
+                if (i === 0) {
+                    sumOthersCount = sumOthersCount + r[j].value;
+                }
+                if (r[j]._id.time === result[i].date) {
+                    result[i].othersCount = r[j].value;
+                }
+            }
+        }
+    }).catch((e) => {
+        return ctx.body = {
+            data: result,
+            maxInitCount: maxInitCount,
+            maxOthersCount: maxOthersCount,
+            sumInitCount: sumInitCount,
+            sumOthersCount: sumOthersCount,
+            errorCode: e
+        };
+    });
+
+    await fetchDB(daysRegExp, 'init').then((r) => {
+        for (let i in result) {
+            i = parseInt(i);
+            for (let j in r) {
+                j = parseInt(j);
+                maxInitCount = ( maxInitCount < r[j].value ) ? r[j].value : maxInitCount;
+                if (i === 0) {
+                    sumInitCount = sumInitCount + r[j].value;
+                }
+                if (r[j]._id.time === result[i].date) {
+                    result[i].SDKInitCount = r[j].value;
+                }
+            }
+        }
+    }).catch((e) => {
+        return ctx.body = {
+            data: result,
+            maxInitCount: maxInitCount,
+            maxOthersCount: maxOthersCount,
+            sumInitSDKCount: sumInitSDKCount,
+            sumOthersCount: sumOthersCount,
+            errorCode: e
+        };
+    });
+
+    let max = ( maxOthersCount > maxInitCount ) ?  maxOthersCount : maxInitCount;
+
+    for (let i in result) {
+        i = parseInt(i);
+        let percentOthers = ( ( result[i].othersCount / max ) * 100 ).toFixed(0) + '%';
+        let percentInit = ( ( result[i].SDKInitCount / max ) * 100 ).toFixed(0) + '%';
+        result[i].othersStyle = {
+            height: percentOthers
+        };
+        result[i].SDKInitStyle = {
+            height: percentInit
+        }
+    }
+
+    return ctx.body = {
+        data: result.reverse(),
+        maxInitCount: maxInitCount,
+        maxOthersCount: maxOthersCount,
+        sumInitCount: sumInitCount,
+        sumOthersCount: sumOthersCount,
+        errorCode: null
+    };
 })
 .get('/getUsersLocation', async (ctx, next) => {
 
@@ -165,13 +416,99 @@ router
     await fetchDB().then((data) => {
 
         let result = new Array();
-
+        let sumValue = 0;
+        let maxValue = 0;
         for (let i in data) {
+            i = parseInt(i);
+            maxValue = (maxValue < data[i].value) ? data[i].value : maxValue;
             let r = {
                 province: data[i]._id,
                 value: data[i].value
             }
+            sumValue = sumValue + data[i].value;
             result.push(r);
+        }
+
+        return ctx.body = {
+            data: result,
+            maxValue: maxValue,
+            sumValue: sumValue,
+            errorCode: null
+        };
+
+    }).catch((error) => {
+        return ctx.body = {
+            data: [],
+            maxValue: 0,
+            sumValue: 0,
+            errorCode: error
+        };
+    });
+
+})
+.get('/getChannelData', async (ctx, next) => {
+
+    let result = new Array();
+    for (let i = 1; i < 11; i++) {
+        let data = {
+            rank: i,
+            appID: '',
+            openAccountCount: 0,
+            initCount: 0,
+            payCount: 0,
+            debitCount: 0,
+            purchaseCount: 0
+        }
+        result.push(data);
+    }
+
+    function fetchDB (){
+        return new Promise((resolve, reject) => {
+            db.bind('front_report');
+            db.front_report.aggregate([
+                {$match: {'_id.name': 'CREATE_ACCOUNT_SUCCESS'}},
+                {$group: {_id: {appID: '$_id.appID'},value: {$sum: '$cnt'}}},
+                {$sort: {value: -1}},
+                {$limit: 10}
+            ],
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                }else{
+                    resolve(result);
+                }
+            });
+        });
+    }
+
+    await fetchDB().then((r) => {
+        for (let i in result) {
+            i = parseInt(i);
+            if (i < r.length) {
+                // switch (r[i]._id.name) {
+                //     case 'CREATE_ACCOUNT_SUCCESS':
+                //         result[i].openAccountCount = r[i].value;
+                //         break;
+                //     case 'INIT_DEVICE_INFO':
+                //         result[i].initCount = r[i].value;
+                //         break;
+                //     case 'PAY_USER_CONSUMING':
+                //         result[i].payCount = r[i].value;
+                //         break;
+                //     case 'DEBIT_USER_CONSUMING':
+                //         result[i].debitCount = r[i].value;
+                //         break;
+                //     case 'PURCHASE_USER_CONSUMING':
+                //         result[i].purchaseCount = r[i].value;
+                //         break;
+                //     default:
+                //         break;
+                // }
+                result[i].openAccountCount = r[i].value;
+                result[i].appID = r[i]._id.appID
+            }else {
+                continue;
+            }
         }
 
         return ctx.body = {
@@ -180,7 +517,7 @@ router
         };
 
     }).catch((error) => {
-        return ctx.body = {error: error};
+        return ctx.body = {data: [], errorCode: error};
     });
 
 });

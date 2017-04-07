@@ -27,7 +27,7 @@ let EVN = getEVN();
 
 const EVN_C = {
   LOCAL: {
-    HOST_URL: 'http://localhost:10261/api/'
+    HOST_URL: 'http://localhost:10260/api/'
   },
   DEV: {
     HOST_URL: 'http://10.128.166.39:10260/api/'

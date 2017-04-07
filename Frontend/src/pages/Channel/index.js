@@ -5,7 +5,7 @@ export default () => (
   //<UserTrend />
   <div className="pages-channel">
     <div className="channel-rank-title">
-      渠道初始化SDK次数（TOP 10）
+      渠道开户数（TOP 10）
     </div>
     <ChannelRank />
   </div>

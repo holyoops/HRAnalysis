@@ -42,6 +42,7 @@ function dev(opts) {
     // request
     const start = new Date;
     let rqID = uuid(16, 16);
+    let body = ctx.request.body?ctx.request.body:ctx.query;
     console.log('  '
       + chalk.green('%s')
       + ' ' + chalk.bold('>>>')
@@ -54,7 +55,7 @@ function dev(opts) {
         start.toLocaleString(),
         ctx.method,
         ctx.originalUrl,
-        JSON.stringify(ctx.request.body));
+        JSON.stringify(body));
 
     return next().then(function() {
 

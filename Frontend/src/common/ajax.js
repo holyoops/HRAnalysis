@@ -6,7 +6,10 @@ var ajaxOptions = {
     timeout: 0,
     data: null,
     dataType: 'text',
-    headers: {},
+    headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+    },
     onprogress: function () { },
     onuploadprogress: function () { },
     xhr: null

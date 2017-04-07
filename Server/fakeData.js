@@ -248,7 +248,7 @@ router
 
     let dataList = new Array();
 
-    for (var i = 0; i < 1000000; i++) {
+    for (var i = 0; i < 100000; i++) {
 
         let provinceList = [
             '上海市',
@@ -393,6 +393,15 @@ router
         }else {
             time = time + '';
         }
+        // (Math.floor(Math.random() * 15) + 15)
+        let today = new Date();
+        let date = new Date(today);
+        date.setDate(today.getDate() - Math.floor(Math.random() * 15));
+
+        let day = date.getDate() + '';
+        if (day < 10) {
+            day = '0' + day;
+        }
 
         let data = {
             "_id": uuid.v1(),
@@ -400,7 +409,7 @@ router
             "appID": appIDList[appIDRandom],
             "openID": openIDList[appIDRandom][openIDRandom],
             "name": nameList[nameRandom],
-            "time": "2017-03-" + (Math.floor(Math.random() * 15) + 15) + " "+ time +":10:20",
+            "time": "2017-04-" + day + " "+ time +":10:20",
             "IP": "10.10.10.10",
             "IPLocation": {
                 "area":"华东",
