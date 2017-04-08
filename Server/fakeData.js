@@ -268,16 +268,17 @@ router
         ];
         let nameList = [
             'INIT_DEVICE_INFO',
+            'APPROVE_CONSUMING',
+            'LOGIN_CONSUMING',
             'PAY_USER_CONSUMING',
             'PURCHASE_USER_CONSUMING',
             'DEBIT_USER_CONSUMING',
             'ACCOUNT_USER_CONSUMING',
             'DEPOSIT_USER_CONSUMING',
-            'PAY_PAGE_LOAD',
+            'WITHDRAW_USER_CONSUMING',
             'PURCHASE_PAGE_LOAD',
             'DEBIT_PAGE_LOAD',
             'ACCOUNT_PAGE_LOAD',
-            'DEPOSIT_PAGE_LOAD',
             'CREATE_ACCOUNT_SUCCESS'
         ];
         let appIDList = [

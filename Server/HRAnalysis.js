@@ -1,4 +1,4 @@
-const __CONST = require('./common/const.js');
+const __GLOBAL = require('./common/const.js');
 const Koa = require("koa");
 const Serve = require('koa-static');
 const Router = require('koa-router');
@@ -19,34 +19,7 @@ const bodyParser = BodyParser({
     }
 });
 
-const ENV = process.argv.splice(2)[0];
-
-switch (ENV) {
-    case 'LOCAL':
-    console.log('LOCAL');
-    break;
-    case 'DEV':
-    console.log('DEV');
-    break;
-    case 'SIT':
-    console.log('SIT');
-    break;
-    case 'UAT':
-    console.log('UAT');
-    break;
-    case 'PRE_RELEASE':
-    console.log('PRE_RELEASE');
-    break;
-    case 'RELEASE':
-    console.log('RELEASE');
-    break;
-    default:
-    console.log('环境配置错误，请检查启动参数（LOCAL/DEV/SIT/UAT/PRE_RELEASE/RELEASE）');
-    process.exit();
-}
-
-
-const db = mongo.db('mongodb://10.128.166.43/logi_anal', {native_parser:true});
+const db = mongo.db(__GLOBAL('MONGODB_URL')+__GLOBAL('MONGODB_NAME'),, {native_parser:true});
 
 const originList = [
     'http://localhost:10262',
@@ -71,7 +44,7 @@ const cors = Cors({
 });
 
 router
-.prefix('/api')
+.prefix('/analysis')
 .get('/test', function (ctx, next) {
     return ctx.body = {test:'success'};
 })
@@ -153,7 +126,7 @@ router
         }
     }).catch((e) => {
         return ctx.body = {
-            data: result,
+            data: result.reverse(),
             errorCode: e
         };
     });
@@ -170,7 +143,7 @@ router
         }
     }).catch((e) => {
         return ctx.body = {
-            data: result,
+            data: result.reverse(),
             errorCode: e
         };
     });
@@ -188,7 +161,7 @@ router
             }
         }).catch((e) => {
             return ctx.body = {
-                data: result,
+                data: result.reverse(),
                 errorCode: e
             };
         });
@@ -205,7 +178,7 @@ router
             }
         }).catch((e) => {
             return ctx.body = {
-                data: result,
+                data: result.reverse(),
                 errorCode: e
             };
         });
@@ -222,7 +195,7 @@ router
             }
         }).catch((e) => {
             return ctx.body = {
-                data: result,
+                data: result.reverse(),
                 errorCode: e
             };
         });
@@ -239,14 +212,14 @@ router
             }
         }).catch((e) => {
             return ctx.body = {
-                data: result,
+                data: result.reverse(),
                 errorCode: e
             };
         });
     }
 
     return ctx.body = {
-        data: result,
+        data: result.reverse(),
         errorCode: null
     };
 })

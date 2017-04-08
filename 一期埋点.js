@@ -41,7 +41,6 @@ HRAnalysis.eventTrack({
     name:'PAY_USER_CONSUMING', // 支付：PAY_USER_CONSUMING，申购：PURCHASE_USER_CONSUMING，融资：DEBIT_USER_CONSUMING，开户：ACCOUNT_USER_CONSUMING，充值：DEPOSIT_USER_CONSUMING
     message:{
       status: 0, // start: 0, success: 1, cancel: 2,
-      bindCard: false // 是否包含绑卡，暂只需传入false
     },
     traceID: traceID
 });

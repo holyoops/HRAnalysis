@@ -1,8 +1,8 @@
 let getEVN = ()=> {
 
   let host = window.location.href;
-
-  if (host.split('?local').length > 1){
+  return 'SIT';
+  if (host.split('http://localhost').length > 1){
     return 'LOCAL';
   }
   if (host.split('http://localhost').length > 1){
@@ -30,19 +30,19 @@ const EVN_C = {
     HOST_URL: 'http://localhost:10260/api/'
   },
   DEV: {
-    HOST_URL: 'http://10.128.166.39:10260/api/'
+    HOST_URL: '/analysis/'
   },
   SIT: {
-    HOST_URL: ''
+    HOST_URL: '/analysis/'
   },
   UAT: {
-    HOST_URL: ''
+    HOST_URL: '/analysis/'
   },
   PRE_RELEASE: {
-    HOST_URL: ''
+    HOST_URL: '/analysis/'
   },
   RELEASE: {
-    HOST_URL: ''
+    HOST_URL: '/analysis/'
   }
 }
 

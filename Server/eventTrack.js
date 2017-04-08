@@ -6,7 +6,7 @@ const Cors = require('kcors');
 const SendData2Kafka = require('./common/kafka.js');
 const log = require('./common/log.js');
 const httpReq = require('./common/httpReq.js');
-
+const __GLOBAL = require('./common/const.js');
 // const
 const app = new Koa()
 const router = new Router();
@@ -19,29 +19,6 @@ const bodyParser = BodyParser({
         ctx.throw('body parse error', 422);
     }
 });
-
-const ENV = process.argv.splice(2)[0];
-
-switch (ENV) {
-    case 'DEV':
-    console.log('DEV');
-    break;
-    case 'SIT':
-    console.log('SIT');
-    break;
-    case 'UAT':
-    console.log('UAT');
-    break;
-    case 'PRE_RELEASE':
-    console.log('PRE_RELEASE');
-    break;
-    case 'RELEASE':
-    console.log('RELEASE');
-    break;
-    default:
-    console.log('环境配置错误，请检查启动参数（DEV/SIT/UAT/PRE_RELEASE/RELEASE）');
-    process.exit();
-}
 
 // COR LIST
 const originList = [
@@ -73,18 +50,47 @@ router
 .post('/eventTrack', function (ctx, next) {
     let body = ctx.request.body;
     let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+
     httpReq({
-        channelName: 'qk',
-        ip: clientIP//'125.111.255.255'
+        channelName: __GLOBAL('BQS_CN'),
+        ip: clientIP
     },{
-        hostname: '10.128.166.43',
-        port: 9012,
-        path: '/bqsIpCheck/ipCheck?',
+        hostname: __GLOBAL('BQS_IP'),
+        port: __GLOBAL('BQS_PORT'),
+        path: __GLOBAL('BQS_PATH'),
         method: 'GET'
     }).then((r)=>{
+
         let IPInfo = JSON.parse(r);
-        body.time = new Date().toLocaleString();
-        if (IPInfo.isSuccess === 'true') {
+        let today = new Date();
+        let m = today.getMonth() + 1 + '';
+        if ( m < 10 ) {
+            m = '0' + m;
+        }
+        let d = today.getDate() + '';
+        if ( d < 10 ) {
+            d = '0' + d;
+        }
+        let h = today.getHours() + '';
+        if ( h < 10 ) {
+            h = '0' + h;
+        }
+        let mi = today.getMinutes() + '';
+        if ( mi < 10 ) {
+            mi = '0' + mi;
+        }
+        let s = today.getSeconds() + '';
+        if ( s < 10 ) {
+            s = '0' + s;
+        }
+        let milli = today.getMilliseconds() + '';
+        if ( milli < 10 ) {
+            milli = '0' + milli;
+        }
+        let time = today.getFullYear() + "-" + m + "-" + d + ' ' + h + ':' + s + ':' + mi + ':' + milli;
+
+        body.time = time;
+        if (IPInfo.body.resultData.isSuccess === 'true') {
             body.IPLocation = IPInfo.body.resultData.ipcountryDetail;
         }else{
             body.IPLocation = {};
