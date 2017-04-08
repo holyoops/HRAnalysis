@@ -87,7 +87,7 @@ router
         if ( milli < 10 ) {
             milli = '0' + milli;
         }
-        let time = today.getFullYear() + "-" + m + "-" + d + ' ' + h + ':' + s + ':' + mi + ':' + milli;
+        let time = today.getFullYear() + "-" + m + "-" + d + ' ' + h + ':' + mi + ':' + s + ':' + milli;
 
         body.time = time;
         body.IP = clientIP;
