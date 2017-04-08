@@ -90,6 +90,7 @@ router
         let time = today.getFullYear() + "-" + m + "-" + d + ' ' + h + ':' + s + ':' + mi + ':' + milli;
 
         body.time = time;
+        body.IP = clientIP;
         if (IPInfo.body.resultData.isSuccess === 'true') {
             body.IPLocation = IPInfo.body.resultData.ipcountryDetail;
         }else{
