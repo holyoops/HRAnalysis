@@ -19,7 +19,7 @@ const bodyParser = BodyParser({
     }
 });
 
-const db = mongo.db(__GLOBAL('MONGODB_URL')+__GLOBAL('MONGODB_NAME'),, {native_parser:true});
+const db = mongo.db(__GLOBAL('MONGODB_URL')+__GLOBAL('MONGODB_NAME'),{native_parser:true});
 
 const originList = [
     'http://localhost:10262',
@@ -84,7 +84,7 @@ router
             let r = new RegExp('(' + date + ')');
             let match;
             if (type === 'others') {
-                match = {'_id.time' : r, '_id.name': {$ne: 'INIT_DEVICE_INFO'}};
+                match = {'_id.time' : r, '_id.name': {$nin: ['INIT_DEVICE_INFO','PURCHASE_PAGE_LOAD','DEBIT_PAGE_LOAD','ACCOUNT_PAGE_LOAD','CREATE_ACCOUNT_SUCCESS']}};
             }else if (type === 'init'){
                 match = {'_id.time' : r, '_id.name': 'INIT_DEVICE_INFO'};
             }else if (type === 'pay'){
@@ -458,25 +458,6 @@ router
         for (let i in result) {
             i = parseInt(i);
             if (i < r.length) {
-                // switch (r[i]._id.name) {
-                //     case 'CREATE_ACCOUNT_SUCCESS':
-                //         result[i].openAccountCount = r[i].value;
-                //         break;
-                //     case 'INIT_DEVICE_INFO':
-                //         result[i].initCount = r[i].value;
-                //         break;
-                //     case 'PAY_USER_CONSUMING':
-                //         result[i].payCount = r[i].value;
-                //         break;
-                //     case 'DEBIT_USER_CONSUMING':
-                //         result[i].debitCount = r[i].value;
-                //         break;
-                //     case 'PURCHASE_USER_CONSUMING':
-                //         result[i].purchaseCount = r[i].value;
-                //         break;
-                //     default:
-                //         break;
-                // }
                 result[i].openAccountCount = r[i].value;
                 result[i].appID = r[i]._id.appID
             }else {
