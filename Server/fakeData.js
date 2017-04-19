@@ -199,7 +199,7 @@ router
 
 })
 
-// 清空数据库
+// 清空数据库db.bind('front_report_city');
 .get('/cleanData', async function (ctx, next) {
 
     db.bind('front');
@@ -222,6 +222,49 @@ router
     }).catch((e) => {
         return ctx.body = {msg:'clean db error: '+e};
     });
+
+})
+
+.get('/cleanAllData', async function (ctx, next) {
+
+
+    let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+    log('api/cleanAllData', '', ctx.header.origin, clientIP);
+    function fetchDBCity(){
+        db.bind('front_report_city');
+        return new Promise((resolve, reject) => {
+            db.front_report_city.remove({},(e, r) => {
+                if (e){
+                    reject(e);
+                }else {
+                    resolve(r);
+                }
+            });
+        });
+    }
+    function fetchDB(){
+        db.bind('front_report');
+        return new Promise((resolve, reject) => {
+            db.front_report.remove({},(e, r) => {
+                if (e){
+                    reject(e);
+                }else {
+                    resolve(r);
+                }
+            });
+        });
+    }
+    await fetchDB().then((r) => {
+    }).catch((e) => {
+        return ctx.body = {msg:'clean db error: '+e};
+    });
+
+    await fetchDBCity().then((r) => {
+    }).catch((e) => {
+        return ctx.body = {msg:'clean db error: '+e};
+    });
+
+    return ctx.body = {msg:'clean db success'};
 
 })
 
@@ -248,14 +291,14 @@ router
 
     let dataList = new Array();
 
-    for (var i = 0; i < 100000; i++) {
+    for (var i = 0; i < 100; i++) {
 
         let provinceList = [
             '上海市',
             '浙江省',
             '江苏省',
             '北京市',
-            '新疆',
+            '重庆市',
             '香港特别行政区',
             '江西省',
             '新疆维吾尔自治区'
@@ -410,7 +453,7 @@ router
             "appID": appIDList[appIDRandom],
             "openID": openIDList[appIDRandom][openIDRandom],
             "name": nameList[nameRandom],
-            "time": "2017-04-" + day + " "+ time +":10:20",
+            "time": "2017-04-" + "10" + " "+ time +":10:20",
             "IP": "10.10.10.10",
             "IPLocation": {
                 "area":"华东",
@@ -459,7 +502,28 @@ router
 
 
 
-});
+})
+.put('/fuckPut', async function (ctx, next) {
+    function fetchDB(){
+
+        return new Promise((resolve, reject) => {
+
+                if (e){
+                    reject(e);
+                }else {
+                    resolve(ctx.body);
+                }
+
+        });
+    }
+    await fetchDB().then((r) => {
+    }).catch((e) => {
+        return ctx.body = {msg:'clean db error: '+e};
+    });
+    return ctx.body = {msg: ctx.body};
+
+})
+;
 
 app
 .use(bodyParser)

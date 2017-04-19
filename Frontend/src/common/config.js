@@ -8,18 +8,7 @@ let getEVN = ()=> {
   if (host.split('http://localhost').length > 1){
     return 'DEV';
   }
-  if (host.split('10.0.0.2').length > 1){
-    return 'SIT';
-  }
-  if (host.split('10.0.0.3').length > 1){
-    return 'UAT';
-  }
-  if (host.split('10.0.0.4').length > 1){
-    return 'PRE_RELEASE';
-  }
-  if (host.split('10.0.0.5').length > 1){
-    return 'RELEASE';
-  }
+  return 'RELEASE'
 
 }
 

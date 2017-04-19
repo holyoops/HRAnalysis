@@ -70,12 +70,26 @@ router
         let day = date.getFullYear() + "-" + m + "-" + d;
         daysRegExp = daysRegExp + day + ((i === 14) ? '' : '|') ;
 
-        result.push({
-            date: day,
-            formatedDate: m + '月' + d + '日',
-            othersCount: 0,
-            SDKInitCount: 0
-        });
+        if (ctx.query.type === 'business') {
+            result.push({
+                date: day,
+                formatedDate: m + '月' + d + '日',
+                othersCount: 0,
+                SDKInitCount: 0,
+                openAccountCount: 0,
+                purchaseCount: 0,
+                debitCount: 0,
+                payCount: 0
+            });
+        }else{
+            result.push({
+                date: day,
+                formatedDate: m + '月' + d + '日',
+                othersCount: 0,
+                SDKInitCount: 0
+            });
+        }
+
     }
 
     function fetchDB (date, type){

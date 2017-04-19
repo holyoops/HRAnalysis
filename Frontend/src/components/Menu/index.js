@@ -1,27 +1,27 @@
 import React, { Component } from 'react';
-import { browserHistory } from 'react-router';
+import { hashHistory, browserHistory } from 'react-router';
 import './index.less';
 
 const items = [
   {
       en: 'Dashboard',
       cn: '总览',
-      key: 'dashboard'
+      key: 'Dashboard'
   },
   {
       en: 'Channels',
       cn: '渠道',
-      key: 'channels'
+      key: 'Channels'
   },
   {
       en: 'Users',
       cn: '用户分布',
-      key: 'users'
+      key: 'Users'
   },
   {
       en: 'Business',
       cn: '业务',
-      key: 'business'
+      key: 'Business'
   }
 ];
 
@@ -30,15 +30,17 @@ class Menu extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selectedItemKey : browserHistory.getCurrentLocation().pathname.split('/')[1]
+      selectedItemKey : hashHistory.getCurrentLocation().pathname.split('/')[1]
     };
   }
 
+
+
   componentDidMount() {
-    let currentItemKey = browserHistory.getCurrentLocation().pathname.split('/')[1];
+    let currentItemKey = hashHistory.getCurrentLocation().pathname.split('/')[1];
     if (currentItemKey === ''){
       this.setState({
-        selectedItemKey: 'dashboard'
+        selectedItemKey: 'Dashboard'
       });
     }else{
       this.setState({
@@ -49,7 +51,7 @@ class Menu extends Component {
 
   handleClick(itemKey, event) {
     this.setState({selectedItemKey: itemKey});
-    browserHistory.push('/' + itemKey);
+    hashHistory.push('/' + itemKey);
   }
 
   render() {

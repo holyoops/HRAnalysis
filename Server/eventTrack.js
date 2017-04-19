@@ -10,7 +10,7 @@ const __GLOBAL = require('./common/const.js');
 // const
 const app = new Koa()
 const router = new Router();
-const logger = require('koa-logger')
+const logger = require('koa-logger');
 
 const bodyParser = BodyParser({
     onerror: function (err, ctx) {
@@ -49,8 +49,8 @@ router
 // 埋点接口
 .post('/eventTrack', function (ctx, next) {
     let body = ctx.request.body;
-    let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
-
+    //let clientIP = ctx.ips.length > 0 ? ctx.ips[ctx.ips.length - 1] : ctx.ip;
+    let clientIP = ctx.header['x-forwarded-for'].split(',')[0];
     httpReq({
         channelName: __GLOBAL('BQS_CN'),
         ip: clientIP
@@ -96,8 +96,8 @@ router
         }else{
             body.IPLocation = {};
         }
-        log('api/eventTrack', body, ctx.header.origin, clientIP);
-        const k = new SendData2Kafka(JSON.stringify(body));
+
+        new SendData2Kafka(JSON.stringify(body));
     }).catch((e)=>{
         console.log(e);
     });

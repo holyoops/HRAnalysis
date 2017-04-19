@@ -37,7 +37,7 @@ const EVN_C = {
       MONGODB_URL: 'mongodb://10.128.166.43/',
       MONGODB_NAME: 'logi_anal',
       KAFKA_IPS: '10.128.166.25:2181,10.128.166.27:2181,10.128.166.28:2181',
-      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_TOPIC: 'logianalfront',
       KAFKA_CLIENT_ID: 'clientID',
       KAFKA_KEY: 'theKey',
       BQS_IP: '10.128.166.43',
@@ -49,7 +49,7 @@ const EVN_C = {
       MONGODB_URL: 'mongodb://10.128.166.43/',
       MONGODB_NAME: 'logi_anal',
       KAFKA_IPS: '10.128.166.25:2181,10.128.166.27:2181,10.128.166.28:2181',
-      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_TOPIC: 'logianalfront',
       KAFKA_CLIENT_ID: 'clientID',
       KAFKA_KEY: 'theKey',
       BQS_IP: '10.128.166.43',
@@ -61,7 +61,7 @@ const EVN_C = {
       MONGODB_URL: 'mongodb://10.128.166.43/',
       MONGODB_NAME: 'logi_anal',
       KAFKA_IPS: '10.128.166.25:2181,10.128.166.27:2181,10.128.166.28:2181',
-      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_TOPIC: 'logianalfront',
       KAFKA_CLIENT_ID: 'clientID',
       KAFKA_KEY: 'theKey',
       BQS_IP: '10.128.166.43',
@@ -73,7 +73,7 @@ const EVN_C = {
       MONGODB_URL: 'mongodb://10.128.166.43/',
       MONGODB_NAME: 'logi_anal',
       KAFKA_IPS: '10.128.166.25:2181,10.128.166.27:2181,10.128.166.28:2181',
-      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_TOPIC: 'logianalfront',
       KAFKA_CLIENT_ID: 'clientID',
       KAFKA_KEY: 'theKey',
       BQS_IP: '10.128.166.43',
@@ -82,10 +82,28 @@ const EVN_C = {
       BQS_CN: 'qk'
   },
   PRE_RELEASE: {
-      MONGODB_URL: ''
+      MONGODB_URL: 'mongodb://18.18.82.10/',
+      MONGODB_NAME: 'logi_anal',
+      KAFKA_IPS: '18.18.82.11:9092',
+      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_CLIENT_ID: 'clientID',
+      KAFKA_KEY: 'theKey',
+      BQS_IP: '18.18.82.12',
+      BQS_PATH: '/bqsIpCheck/ipCheck?',
+      BQS_PORT: '8888',
+      BQS_CN: 'qk'
   },
   RELEASE: {
-      MONGODB_URL: ''
+      MONGODB_URL: 'mongodb://10.11.82.10/',
+      MONGODB_NAME: 'logi_anal',
+      KAFKA_IPS: '10.11.82.12:9092,10.11.82.11:9092,10.11.82.9:9092',
+      KAFKA_TOPIC: 'logi_anal_front',
+      KAFKA_CLIENT_ID: 'clientID',
+      KAFKA_KEY: 'theKey',
+      BQS_IP: '10.11.88.4',
+      BQS_PATH: '/bqsIpCheck/ipCheck?',
+      BQS_PORT: '9999',
+      BQS_CN: 'qk'
   }
 }
 
